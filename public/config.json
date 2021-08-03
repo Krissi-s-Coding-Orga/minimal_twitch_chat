@@ -1,5 +1,16 @@
 {
-    "dark_mode": true,
-    "color": "#6441a5",
+    "colors":{
+        "dark_mode": false,
+        "color": "#6441a5"
+    },
+    "notifications": {
+
+    },
+    "easter_eggs": {
+
+    },
+    "misc": {
+        "hide_deleted_message": false
+    },
     "channel": "krissi"
 }

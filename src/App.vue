@@ -4,6 +4,7 @@
 
 <template>
     <v-app>
+        <vue-headful title="Minimal Twitch Chat"/>
         <chat></chat>
         <reconnect-dialog></reconnect-dialog>
         <connecting-dialog></connecting-dialog>
@@ -11,6 +12,7 @@
 </template>
 
 <script>
+
 import Chat from "./pages/Chat.vue"
 import { config } from "./main"
 import ConnectingDialog from './components/ConnectingDialog.vue'
@@ -23,7 +25,7 @@ export default {
         ReconnectDialog
     },
     created() {
-        this.$vuetify.theme.dark = config.dark_mode
+        this.$vuetify.theme.dark = config.colors.dark_mode
     }
 }
 

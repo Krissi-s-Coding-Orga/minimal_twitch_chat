@@ -27,7 +27,7 @@ export default {
     }),
     methods: {
         getThemeColor: function() {
-            return config.color
+            return config.colors.color
         }
     },
     created() {

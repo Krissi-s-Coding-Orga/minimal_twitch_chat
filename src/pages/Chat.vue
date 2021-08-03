@@ -20,6 +20,8 @@
 <script>
 import Vue from 'vue'
 
+import { config } from "@/main"
+
 import MessagePanel from '../components/panels/MessagePanel.vue';
 
 export default {
@@ -58,7 +60,19 @@ export default {
                 "message": message,
                 "userstate": userstate
             })
-        });
+        })
+        this.$client.on("messagedeleted", (channel, username, deletedMessage, userstate) => {
+            const messageId = userstate["target-msg-id"]
+            if(config.misc.hide_deleted_message) {
+                Vue.delete(this.messages, messageId)
+            } else {
+                const oldMessage = this.messages[messageId]
+                Vue.set(this.messages, messageId, {
+                    "message": null,
+                    "userstate": oldMessage.userstate
+                })
+            }
+        })
     },
     methods: {
         generateUserColor(userid) {

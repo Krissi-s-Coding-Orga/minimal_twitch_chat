@@ -49,7 +49,7 @@ export default {
             this.$client.connect()
         },
         getThemeColor: function() {
-            return config.color
+            return config.colors.color
         }
     },
     created() {
