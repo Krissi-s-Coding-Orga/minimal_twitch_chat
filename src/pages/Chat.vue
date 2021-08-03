@@ -26,18 +26,49 @@ export default {
   components: { MessagePanel },
     data: function() {
         return {
-            'messages': {}
+            colordata: {},
+            messages: {},
+            default_colors = [
+                "#FF0000",
+                "#0000FF",
+                "#00FF00",
+                "#B22222",
+                "#FF7F50",
+                "#9ACD32",
+                "#FF4500",
+                "#2E8B57",
+                "#DAA520",
+                "#D2691E",
+                "#5F9EA0",
+                "#1E90FF",
+                "#FF69B4",
+                "#8A2BE2",
+                "#00FF7F"]
         }
     },
     created() {
         this.$client.on("message", (channel, userstate, message, self) => {
             if (self) return;
 
+            if(typeof(userstate.color) === 'undefined') {
+                userstate.color = generateUserColor(userstate.user-id)
+            }
+
             Vue.set(this.messages, userstate.id, {
                 "message": message,
                 "userstate": userstate
             })
         });
+    },
+    methods: {
+        generateUserColor(userid) {
+            if(typeof(colordata[userid]) !== 'undefined') { return colordata[userid] }
+            
+            const index = Math.floor(Math.random() * default_colors.length)
+            const color = default_colors[index]
+            colordata[userid] = color
+            return color
+        }
     },
     computed: {
     },
