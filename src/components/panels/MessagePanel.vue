@@ -4,7 +4,7 @@
 
 <template>
     <div>
-        {{message}}
+        <span class="username" :style="{ color: userstate.color }">{{userstate.display-name}}:</span> {{message}}
     </div>
 </template>
 
