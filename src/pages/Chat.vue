@@ -1,20 +1,24 @@
 <style>
     #chat-container {
+        display: flex;
         position: absolute;
         bottom: 0;
         left: 0;
-        height: max-content;
+        height: 100%;
         width: 100%;
         padding-bottom: 10px;
+        align-items: flex-end;
     }
 </style>
 
 <template>
     <div id="chat-container">
-        <message-panel v-for="(data, id) in messages"
-            :key="id"
-            :message="data.message" 
-            :userstate="data.userstate"></message-panel>
+        <div id="chat-content">
+            <message-panel v-for="(data, id) in messages"
+                :key="id"
+                :message="data.message" 
+                :userstate="data.userstate"></message-panel>
+        </div>
     </div>
 </template>
 
@@ -115,11 +119,6 @@ export default {
         }
     },
     computed: {
-    },
-    watch:{
-        messages: {
-            deep: true
-        }
     }
 }
 </script>
