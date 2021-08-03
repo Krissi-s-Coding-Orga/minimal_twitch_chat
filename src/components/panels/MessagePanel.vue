@@ -23,16 +23,24 @@
             <span class="username" :style="{ color: userstate.color }">
                 {{userstate['display-name']}}:
             </span>
+            <component v-for="(component, index) in components" :key="'component'+index" :is="component"/>
             {{message}}
         </h2>
     </div>
 </template>
+
+https://static-cdn.jtvnw.net/emoticons/v2/ID/default/dark/4.0
 
 <script>
 import { config } from "@/main"
 
 export default {
     props: ['message', 'userstate'],
+    data: function() {
+        return {
+            components: {}
+        }
+    },
     methods: {
         isDeleted() {
             return this.message === null
@@ -40,6 +48,8 @@ export default {
         getFontSize() {
             return config.misc.font_size
         }
+    },
+    created() {
     }
 }
 </script>

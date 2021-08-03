@@ -8,10 +8,10 @@
     },
     "dependencies": {
         "axios": "^0.21.0",
-        "tmi.js": "^1.8.3",
         "chart.js": "^2.9.4",
         "core-js": "^3.7.0",
         "object-assign-deep": "^0.4.0",
+        "tmi.js": "^1.8.3",
         "vue": "^2.6.12",
         "vue-context": "^6.0.0",
         "vue-headful": "^2.1.0",
