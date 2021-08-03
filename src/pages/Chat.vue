@@ -18,7 +18,10 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 import MessagePanel from '../components/panels/MessagePanel.vue';
+
 export default {
   components: { MessagePanel },
     data: function() {
@@ -29,10 +32,19 @@ export default {
     created() {
         this.$client.on("message", (channel, userstate, message, self) => {
             if (self) return;
-            
-            messages[userstate.id].message = message
-            messages[userstate.id].userstate = userstate
+
+            Vue.set(this.messages, userstate.id, {
+                "message": message,
+                "userstate": userstate
+            })
         });
+    },
+    computed: {
+    },
+    watch:{
+        messages: {
+            deep: true
+        }
     }
 }
 </script>
