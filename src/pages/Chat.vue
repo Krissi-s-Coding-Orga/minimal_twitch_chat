@@ -10,16 +10,28 @@
 
 <template>
     <div id="chat-container">
+        <message-panel v-for="(data, id) in messages"
+            :key="id"
+            :message="data.message" 
+            :userstate="data.userstate"></message-panel>
     </div>
 </template>
 
 <script>
+import MessagePanel from '../components/panels/MessagePanel.vue';
 export default {
+  components: { MessagePanel },
+    data: function() {
+        return {
+            'messages': {}
+        }
+    },
     created() {
         this.$client.on("message", (channel, userstate, message, self) => {
             if (self) return;
-            console.log(message)
-            console.log(userstate)
+            
+            messages[userstate.id].message = message
+            messages[userstate.id].userstate = userstate
         });
     }
 }
