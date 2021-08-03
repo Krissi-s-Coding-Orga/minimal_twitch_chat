@@ -1,5 +1,6 @@
 <style>
 @import "./assets/styles/fonts.css";
+
 </style>
 
 <template>

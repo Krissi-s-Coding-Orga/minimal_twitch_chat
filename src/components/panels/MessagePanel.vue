@@ -11,7 +11,7 @@
 
 <template>
     <div class="message">
-        <h2 v-if="isDeleted()" :style="{ fontSize:getFontSize() }">
+        <h2 v-if="isDeleted()" class="message_font" :style="{ fontSize:getFontSize() }">
             <span class="username" :style="{ color: userstate.color }">
                 {{userstate['display-name']}}:
             </span>
@@ -19,7 +19,7 @@
                 Message got deleted
             </span>
         </h2>
-        <h2 v-else :style="{ fontSize:getFontSize() }">
+        <h2 v-else class="message_font" :style="{ fontSize:getFontSize() }">
             <span class="username" :style="{ color: userstate.color }">
                 {{userstate['display-name']}}:
             </span>

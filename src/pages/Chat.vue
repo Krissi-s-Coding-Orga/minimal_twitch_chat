@@ -53,6 +53,11 @@ export default {
         this.$client.on("message", (channel, userstate, message, self) => {
             if (self) return;
 
+            if(Object.keys(this.messages).length > 40) {
+                Vue.delete(this.messages,
+                 Object.keys(this.messages)[0])
+            }
+
             if(userstate.color === null) {
                 userstate.color = this.generateUserColor(userstate['user-id'])
             }
