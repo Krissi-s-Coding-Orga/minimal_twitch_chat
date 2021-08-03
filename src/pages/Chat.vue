@@ -53,9 +53,7 @@ export default {
         this.$client.on("message", (channel, userstate, message, self) => {
             if (self) return;
 
-            if(message === 'wipe') { this.messages = { } }
-
-            if(typeof(userstate.color) === 'undefined') {
+            if(userstate.color === null) {
                 userstate.color = this.generateUserColor(userstate['user-id'])
             }
 
@@ -74,12 +72,11 @@ export default {
         })
         this.$client.on("timeout", (channel, username, reason, duration, userstate) => {
             const userId = userstate['target-user-id']
-            for(let messageId in this.messages) {
-                let messageData = this.messages[messageId]
-                if(messageData.byuser === userId) {
-                    this.deleteMessage(messageId)
-                }
-            }
+            this.handleBan(userId)
+        });
+        this.$client.on("ban", (channel, username, reason, userstate) => {
+            const userId = userstate['target-user-id']
+            this.handleBan(userId)
         });
     },
     methods: {
@@ -90,6 +87,14 @@ export default {
             const color = this.default_colors[index]
             this.colordata[userid] = color
             return color
+        },
+        handleBan(userId) {
+            for(let messageId in this.messages) {
+                let messageData = this.messages[messageId]
+                if(messageData.byuser === userId) {
+                    this.deleteMessage(messageId)
+                }
+            }
         },
         deleteMessage(messageId) {
             if(config.misc.hide_deleted_message) {
