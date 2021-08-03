@@ -1,21 +1,44 @@
 <style>
-
+.deleted {
+    font-style: italic;
+    color: grey;
+}
+.message {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 </style>
 
 <template>
-    <div>
-        <span class="username" :style="{ color: userstate.color }">{{userstate['display-name']}}:</span> 
-        <h2 v-if="delected">Message got deleted</h2>
-        <h2 v-else>{{message}}</h2>
+    <div class="message">
+        <h2 v-if="isDeleted()" :style="{ fontSize:getFontSize() }">
+            <span class="username" :style="{ color: userstate.color }">
+                {{userstate['display-name']}}:
+            </span>
+            <span class="deleted">
+                Message got deleted
+            </span>
+        </h2>
+        <h2 v-else :style="{ fontSize:getFontSize() }">
+            <span class="username" :style="{ color: userstate.color }">
+                {{userstate['display-name']}}:
+            </span>
+            {{message}}
+        </h2>
     </div>
 </template>
 
 <script>
+import { config } from "@/main"
+
 export default {
     props: ['message', 'userstate'],
     methods: {
         isDeleted() {
             return this.message === null
+        },
+        getFontSize() {
+            return config.misc.font_size
         }
     }
 }

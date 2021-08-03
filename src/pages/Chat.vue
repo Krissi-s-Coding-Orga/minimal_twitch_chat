@@ -5,6 +5,7 @@
         left: 0;
         height: max-content;
         width: 100%;
+        padding-bottom: 10px;
     }
 </style>
 
@@ -52,27 +53,34 @@ export default {
         this.$client.on("message", (channel, userstate, message, self) => {
             if (self) return;
 
+            if(message === 'wipe') { this.messages = { } }
+
             if(typeof(userstate.color) === 'undefined') {
                 userstate.color = this.generateUserColor(userstate['user-id'])
             }
 
             Vue.set(this.messages, userstate.id, {
                 "message": message,
-                "userstate": userstate
+                "userstate": userstate,
+                "byuser": userstate['user-id']
             })
         })
         this.$client.on("messagedeleted", (channel, username, deletedMessage, userstate) => {
             const messageId = userstate["target-msg-id"]
-            if(config.misc.hide_deleted_message) {
-                Vue.delete(this.messages, messageId)
-            } else {
-                const oldMessage = this.messages[messageId]
-                Vue.set(this.messages, messageId, {
-                    "message": null,
-                    "userstate": oldMessage.userstate
-                })
-            }
+            this.deleteMessage(messageId)
         })
+        this.$client.on("clearchat", () => {
+            this.messages = {}
+        })
+        this.$client.on("timeout", (channel, username, reason, duration, userstate) => {
+            const userId = userstate['target-user-id']
+            for(let messageId in this.messages) {
+                let messageData = this.messages[messageId]
+                if(messageData.byuser === userId) {
+                    this.deleteMessage(messageId)
+                }
+            }
+        });
     },
     methods: {
         generateUserColor(userid) {
@@ -82,6 +90,18 @@ export default {
             const color = this.default_colors[index]
             this.colordata[userid] = color
             return color
+        },
+        deleteMessage(messageId) {
+            if(config.misc.hide_deleted_message) {
+                Vue.delete(this.messages, messageId)
+            } else {
+                const oldMessage = this.messages[messageId]
+                Vue.set(this.messages, messageId, {
+                    "message": null,
+                    "userstate": oldMessage.userstate,
+                    "byuser": oldMessage.byuser
+                })
+            }
         }
     },
     computed: {

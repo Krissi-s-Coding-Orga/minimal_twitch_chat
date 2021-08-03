@@ -1,6 +1,6 @@
 {
     "colors":{
-        "dark_mode": false,
+        "dark_mode": true,
         "color": "#6441a5"
     },
     "notifications": {
@@ -10,7 +10,8 @@
 
     },
     "misc": {
-        "hide_deleted_message": false
+        "hide_deleted_message": false,
+        "font_size": "15px"
     },
     "channel": "krissi"
 }
