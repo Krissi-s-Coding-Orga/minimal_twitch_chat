@@ -28,7 +28,7 @@ export default {
         return {
             colordata: {},
             messages: {},
-            default_colors = [
+            default_colors: [
                 "#FF0000",
                 "#0000FF",
                 "#00FF00",
@@ -51,7 +51,7 @@ export default {
             if (self) return;
 
             if(typeof(userstate.color) === 'undefined') {
-                userstate.color = generateUserColor(userstate.user-id)
+                userstate.color = this.generateUserColor(userstate['user-id'])
             }
 
             Vue.set(this.messages, userstate.id, {
@@ -62,11 +62,11 @@ export default {
     },
     methods: {
         generateUserColor(userid) {
-            if(typeof(colordata[userid]) !== 'undefined') { return colordata[userid] }
+            if(typeof(this.colordata[userid]) !== 'undefined') { return this.colordata[userid] }
             
-            const index = Math.floor(Math.random() * default_colors.length)
-            const color = default_colors[index]
-            colordata[userid] = color
+            const index = Math.floor(Math.random() * this.default_colors.length)
+            const color = this.default_colors[index]
+            this.colordata[userid] = color
             return color
         }
     },
