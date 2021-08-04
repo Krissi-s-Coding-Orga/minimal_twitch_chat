@@ -25,7 +25,13 @@
             </span>
             
             <template v-for="(data, index) in components">
-                <img v-if="data.type === 'image'" :src="data.data" :style="{ height:getFontSize() }" :key="index"/>
+                <img v-if="data.type === 'image'" :src="data.data" :style="{ height:getEmoteSize() }" :key="index"/>
+                <a v-else-if="data.type === 'url'" 
+                    :key="index" 
+                    :href="data.data" 
+                    :style="{ color:getThemeColor() }"
+                    target="_href">
+                        {{data.data}}</a>
                 <template v-else>
                     {{data.data}}
                 </template>
@@ -47,11 +53,17 @@ export default {
         }
     },
     methods: {
+        getThemeColor: function() {
+            return config.colors.color
+        },
         isDeleted() {
             return this.message === null
         },
         getFontSize() {
             return config.misc.font_size
+        },
+        getEmoteSize() {
+            return config.misc.emote_size
         },
         getEmote(messageFragment) {
             for(let emoteId in this.userstate.emotes) {
@@ -72,6 +84,11 @@ export default {
                 this.components.push({
                     type: 'image',
                     data: 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote + '/default/dark/4.0'
+                })
+            } else if(messageFragment.startsWith('http://') || messageFragment.startsWith('https://')){
+                this.components.push({
+                    type: 'url',
+                    data: messageFragment
                 })
             } else {
                 this.components.push({
