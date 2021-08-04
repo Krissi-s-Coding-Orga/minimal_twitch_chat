@@ -29,7 +29,7 @@
     </div>
 </template>
 
-https://static-cdn.jtvnw.net/emoticons/v2/ID/default/dark/4.0
+
 
 <script>
 import { config } from "@/main"
@@ -38,7 +38,7 @@ export default {
     props: ['message', 'userstate'],
     data: function() {
         return {
-            components: {}
+            components: []
         }
     },
     methods: {
@@ -47,9 +47,30 @@ export default {
         },
         getFontSize() {
             return config.misc.font_size
+        },
+        getEmote(messageFragment) {
+            for(let emoteId in this.userstate.emotes) {
+                let emotePosition = this.userstate.emotes[emoteId][0].split('-')
+                if(this.message.indexOf(messageFragment) === emotePosition[0]) {
+                    return emoteId
+                }
+            }
+            return
         }
     },
     created() {
+        const messageFragments = this.message.split(' ')
+        for(let index in messageFragments) {
+            let messageFragment = messageFragments[index]
+            let emote = this.getEmote(messageFragment)
+            if(typeof(emote) !== 'undefined') { 
+                emote = Vue.component({
+                    template: '<img src="https://static-cdn.jtvnw.net/emoticons/v2/' + emoteid + '/default/dark/4.0"/>'
+                })
+            } else {
+
+            }
+        }
     }
 }
 </script>
