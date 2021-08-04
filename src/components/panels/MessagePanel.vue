@@ -23,8 +23,13 @@
             <span class="username" :style="{ color: userstate.color }">
                 {{userstate['display-name']}}:
             </span>
-            <component v-for="(component, index) in components" :key="'component'+index" :is="component"/>
-            {{message}}
+            
+            <template v-for="(data, index) in components">
+                <img v-if="data.type === 'image'" :src="data.data" :style="{ height:getFontSize() }" :key="index"/>
+                <template v-else>
+                    {{data.data}}
+                </template>
+            </template>
         </h2>
     </div>
 </template>
@@ -32,7 +37,6 @@
 
 
 <script>
-import Vue from "vue"
 import { config } from "@/main"
 
 export default {
@@ -64,13 +68,16 @@ export default {
         for(let index in messageFragments) {
             let messageFragment = messageFragments[index]
             let emote = this.getEmote(messageFragment)
-            if(typeof(emote) !== 'undefined') { 
-                emote = Vue.component('emote', {
-                    template: '<img src="https://static-cdn.jtvnw.net/emoticons/v2/' + emote + '/default/dark/4.0"/>'
+            if(typeof(emote) !== 'undefined') {
+                this.components.push({
+                    type: 'image',
+                    data: 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote + '/default/dark/4.0'
                 })
-                this.components.push(emote)
             } else {
-                console.log(messageFragment)
+                this.components.push({
+                    type: 'text',
+                    data: messageFragment
+                })
             }
         }
     }
