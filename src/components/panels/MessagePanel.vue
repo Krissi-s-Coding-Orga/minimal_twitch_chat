@@ -32,6 +32,7 @@
 
 
 <script>
+import Vue from "vue"
 import { config } from "@/main"
 
 export default {
@@ -51,7 +52,7 @@ export default {
         getEmote(messageFragment) {
             for(let emoteId in this.userstate.emotes) {
                 let emotePosition = this.userstate.emotes[emoteId][0].split('-')
-                if(this.message.indexOf(messageFragment) === emotePosition[0]) {
+                if(this.message.indexOf(messageFragment) === Number(emotePosition[0])) {
                     return emoteId
                 }
             }
@@ -64,11 +65,12 @@ export default {
             let messageFragment = messageFragments[index]
             let emote = this.getEmote(messageFragment)
             if(typeof(emote) !== 'undefined') { 
-                emote = Vue.component({
-                    template: '<img src="https://static-cdn.jtvnw.net/emoticons/v2/' + emoteid + '/default/dark/4.0"/>'
+                emote = Vue.component('emote', {
+                    template: '<img src="https://static-cdn.jtvnw.net/emoticons/v2/' + emote + '/default/dark/4.0"/>'
                 })
+                this.components.push(emote)
             } else {
-
+                console.log(messageFragment)
             }
         }
     }
