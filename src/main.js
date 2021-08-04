@@ -38,7 +38,8 @@ fetch('/config.json')
     const twitchClient = new tmi.Client({
         channels: [file.channel],
         connection: {
-            reconnect: false,
+            reconnect: true,
+            maxReconnectAttempts: 1,
             timeout: 500
         }
     })

@@ -7,25 +7,28 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+.message_font > img {
+  vertical-align: middle;
+}
 </style>
 
 <template>
     <div class="message">
-        <h2 v-if="isDeleted()" class="message_font" :style="{ fontSize:getFontSize() }">
+        <div v-if="isDeleted()" class="message_font" :style="{ fontSize:getFontSize() }">
             <span class="username" :style="{ color: userstate.color }">
-                {{userstate['display-name']}}:
+                {{userstate['display-name']}}: 
             </span>
             <span class="deleted">
                 Message got deleted
             </span>
-        </h2>
-        <h2 v-else class="message_font" :style="{ fontSize:getFontSize() }">
+        </div>
+        <div v-else class="message_font" :style="{ fontSize:getFontSize() }">
             <span class="username" :style="{ color: userstate.color }">
-                {{userstate['display-name']}}:
+                {{userstate['display-name']}}: 
             </span>
             
             <template v-for="(data, index) in components">
-                <img v-if="data.type === 'image'" :src="data.data" :style="{ height:getEmoteSize() }" :key="index"/>
+                <img v-if="data.type === 'image'" :style="{ height:getEmoteSize(), width:getEmoteSize() }" :src="data.data" :key="index"/>
                 <a v-else-if="data.type === 'url'" 
                     :key="index" 
                     :href="data.data" 
@@ -36,7 +39,7 @@
                     {{data.data}}
                 </template>
             </template>
-        </h2>
+        </div>
     </div>
 </template>
 
