@@ -72,6 +72,7 @@ export default {
       if(!this.userScrolled) {
         setTimeout(() => {
             this.renableAutoScroll()
+            this.userScrolled = false
         },25)
       }
     });
@@ -79,7 +80,7 @@ export default {
       "messagedeleted",
       (channel, username, deletedMessage, userstate) => {
         const messageId = userstate["target-msg-id"];
-        this.deleteMessage(messageId);
+        this.deleteMessage(messageId)
       }
     );
     this.$client.on("clearchat", () => {
