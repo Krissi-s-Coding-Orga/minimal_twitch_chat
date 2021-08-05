@@ -75,7 +75,7 @@ export default {
         setTimeout(() => {
                 let element = document.getElementById("chat-content");
                 element.scrollTop = element.scrollHeight
-        },100)
+        },25)
       }
     });
     this.$client.on(

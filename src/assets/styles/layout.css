@@ -19,7 +19,7 @@ html {
   display: -ms-flexbox;
   display: flex;
   position: absolute;
-  line-break: anywhere;
+  word-break: break-all;
   bottom: 0;
   left: 0;
   height: 100%;
