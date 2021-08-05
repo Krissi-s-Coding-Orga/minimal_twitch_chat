@@ -1,15 +1,4 @@
 <style>
-.deleted {
-    font-style: italic;
-    color: grey;
-}
-.message {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-.message_font > img {
-  vertical-align: middle;
-}
 </style>
 
 <template>

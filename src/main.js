@@ -39,7 +39,7 @@ fetch('/config.json')
         channels: [file.channel],
         connection: {
             reconnect: true,
-            maxReconnectAttempts: 1,
+            maxReconnectAttempts: 3,
             timeout: 500
         }
     })
