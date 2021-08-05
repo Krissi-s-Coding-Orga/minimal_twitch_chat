@@ -56,6 +56,8 @@ export default {
     this.$client.on("message", (channel, userstate, message, self) => {
       if (self) return;
 
+      this.freshMessage = true
+
       if (Object.keys(this.messages).length > 60) {
         Vue.delete(this.messages, Object.keys(this.messages)[0]);
       }
