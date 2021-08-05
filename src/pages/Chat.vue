@@ -11,7 +11,7 @@
         :userstate="data.userstate"
       ></message-panel>
     </div>
-    <v-btn id="reactive-button" v-if="userScrolled" @click="reenableAutoScroll()">
+    <v-btn id="reactive-button" v-if="userScrolled" @click="renableAutoScroll()" elevation="0" :style="{ backgroundColor: getThemeColor() }">
         Auto Scroll
     </v-btn>
   </div>
@@ -56,8 +56,6 @@ export default {
     this.$client.on("message", (channel, userstate, message, self) => {
       if (self) return;
 
-      this.freshMessage = true
-
       if (Object.keys(this.messages).length > 60) {
         Vue.delete(this.messages, Object.keys(this.messages)[0]);
       }
@@ -73,8 +71,7 @@ export default {
       })
       if(!this.userScrolled) {
         setTimeout(() => {
-                let element = document.getElementById("chat-content");
-                element.scrollTop = element.scrollHeight
+            this.renableAutoScroll()
         },25)
       }
     });
@@ -104,11 +101,14 @@ export default {
       clearInterval(this.scrollInterval)
   },
   methods: {
-    reenableAutoScroll() {
+    getThemeColor: function() {
+        return config.colors.color
+    },
+    renableAutoScroll() {
         this.freshMessage = true
-        this.userScrolled = false
         let element = document.getElementById("chat-content");
         element.scrollTop = element.scrollHeight
+        this.userScrolled = false
     },
     handleScroll () {
         let element = document.getElementById("chat-content")
