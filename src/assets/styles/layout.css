@@ -6,12 +6,12 @@ html {
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
-  margin-top: 10px;
 }
 
 #chat-content {
   overflow-y: auto;
   max-height: 100%;
+  margin-bottom: 10px;
 }
 
 #chat-container {
