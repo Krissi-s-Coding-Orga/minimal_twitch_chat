@@ -69,7 +69,7 @@ export default {
     },
     created() {
         console.log(this.userstate.badges)
-        console.log(this.channel)
+        console.log(this.userstate.room_id)
         const messageFragments = this.message.split(' ')
         for(let index in messageFragments) {
             let messageFragment = messageFragments[index]
