@@ -18,7 +18,7 @@
         </template>
         <template v-else>
             <template v-for="(data, index) in components">
-                <img v-if="data.type === 'image'" :style="{ height:getEmoteSize(), width:getEmoteSize() }" :src="data.data" :key="index"/>
+                <img v-if="data.type === 'image'" :style="{ height:getEmoteSize() }" :src="data.data" :key="index"/>
                 <a class="message-url" v-else-if="data.type === 'url'" 
                     :key="index" 
                     :href="data.data" 
