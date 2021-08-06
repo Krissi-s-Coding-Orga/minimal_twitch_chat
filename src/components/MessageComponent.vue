@@ -2,20 +2,21 @@
 </style>
 
 <template>
-    <div class="message">
-        <div v-if="isDeleted()" class="message_font" :style="{ fontSize:getFontSize() }">
-            <span class="username" :style="{ color: userstate.color }">
-                {{userstate['display-name']}}: 
-            </span>
+    <div class="message" :style="{ fontSize:getFontSize() }">
+        <img v-for="(badgeData, index) in badges"
+            class="badge"
+            :style="{ height:getBadgeSize(), width:getBadgeSize() }"
+            :key="index"
+            :src="getBadgeImage(index, badgeData)"/>
+        <span class="username" :style="{ color: userstate.color }">
+            {{userstate['display-name']}}: 
+        </span>
+        <template v-if="isDeleted()">
             <span class="deleted">
                 Message got deleted
             </span>
-        </div>
-        <div v-else class="message-font" :style="{ fontSize:getFontSize() }">
-            <span class="username" :style="{ color: userstate.color }">
-                {{userstate['display-name']}}: 
-            </span>
-            
+        </template>
+        <template v-else>
             <template v-for="(data, index) in components">
                 <img v-if="data.type === 'image'" :style="{ height:getEmoteSize(), width:getEmoteSize() }" :src="data.data" :key="index"/>
                 <a class="message-url" v-else-if="data.type === 'url'" 
@@ -28,7 +29,7 @@
                     {{data.data}}
                 </template>
             </template>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -36,9 +37,10 @@
 import { config } from "@/main"
 
 export default {
-    props: ['channelbadges', 'message', 'userstate'],
+    props: ['channelbadges', 'globalbadges', 'message', 'userstate'],
     data: function() {
         return {
+            badges: [],
             components: []
         }
     },
@@ -55,6 +57,21 @@ export default {
         getEmoteSize() {
             return config.misc.emote_size
         },
+        getBadgeSize() {
+            return config.misc.badge_size
+        },
+        getBadgeImage(badgeType, badgeData) {
+            if(typeof(this.channelbadges.badge_sets[badgeType]) !== 'undefined') {
+                let badgets = this.channelbadges.badge_sets[badgeType].versions
+                return badgets[badgeData].image_url_4x
+            }
+            if(typeof(this.globalbadges.badge_sets[badgeType]) !== 'undefined') {
+                let badgets = this.globalbadges.badge_sets[badgeType].versions
+                return badgets[badgeData].image_url_4x
+            }
+            console.log(this.globalbadges)
+            console.log(badgeType + ':' + badgeData)
+        },
         getEmote(messageFragment) {
             for(let emoteId in this.userstate.emotes) {
                 let emotePosition = this.userstate.emotes[emoteId][0].split('-')
@@ -66,8 +83,7 @@ export default {
         }
     },
     created() {
-        console.log(this.userstate.badges)
-        console.log(this.channelbadges)
+        this.badges = this.userstate.badges
         const messageFragments = this.message.split(' ')
         for(let index in messageFragments) {
             let messageFragment = messageFragments[index]

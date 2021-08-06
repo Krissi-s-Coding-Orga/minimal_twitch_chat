@@ -10,6 +10,7 @@
         :message="data.message"
         :userstate="data.userstate"
         :channelbadges="channelBadges"
+        :globalbadges="globalBadges"
       ></message-component>
     </div>
     <v-btn id="reactive-button" v-if="userScrolled" @click="renableAutoScroll()" elevation="0" :style="{ backgroundColor: getThemeColor() }">
@@ -33,6 +34,7 @@ export default {
       colordata: {},
       messages: {},
       channelBadges: {},
+      globalBadges: {},
       userScrolled: false,
       scrollInterval: 0,
       freshMessage: false,
@@ -61,6 +63,10 @@ export default {
 
       if(Object.keys(this.channelBadges).length === 0) {
         await this.getChannelBadges(userstate['room-id'])
+      }
+
+      if(Object.keys(this.globalBadges).length === 0) {
+        await this.getGlobalBadges()
       }
 
       this.freshMessage = true
@@ -116,6 +122,10 @@ export default {
     getChannelBadges: async function(roomId) {
       let requestBadges = await axios(`https://badges.twitch.tv/v1/badges/channels/${roomId}/display?language=en`)
       this.channelBadges = requestBadges.data
+    },
+    getGlobalBadges: async function() {
+      let requestBadges = await axios(`https://badges.twitch.tv/v1/badges/global/display`)
+      this.globalBadges = requestBadges.data
     },
     getThemeColor: function() {
         return config.colors.color

@@ -6,9 +6,16 @@
   padding-left: 10px;
   padding-right: 10px;
 }
-.message-font > img {
+.message > img {
   vertical-align: middle;
 }
 .message-url {
   text-decoration: none;
+}
+.badge {
+  margin-right: 2px;
+  border-radius: 4px;
+}
+.badge:not([src]) {
+  display: none;
 }

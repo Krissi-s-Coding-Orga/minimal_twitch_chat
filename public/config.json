@@ -12,7 +12,8 @@
     "misc": {
         "hide_deleted_message": false,
         "font_size": "15px",
-        "emote_size": "25px"
+        "emote_size": "25px",
+        "badge_size": "20px"
     },
     "channel": "krissi"
 }
