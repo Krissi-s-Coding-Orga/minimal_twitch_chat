@@ -11,14 +11,14 @@
                 Message got deleted
             </span>
         </div>
-        <div v-else class="message_font" :style="{ fontSize:getFontSize() }">
+        <div v-else class="message-font" :style="{ fontSize:getFontSize() }">
             <span class="username" :style="{ color: userstate.color }">
                 {{userstate['display-name']}}: 
             </span>
             
             <template v-for="(data, index) in components">
                 <img v-if="data.type === 'image'" :style="{ height:getEmoteSize(), width:getEmoteSize() }" :src="data.data" :key="index"/>
-                <a v-else-if="data.type === 'url'" 
+                <a class="message-url" v-else-if="data.type === 'url'" 
                     :key="index" 
                     :href="data.data" 
                     :style="{ color:getThemeColor() }"
@@ -80,7 +80,7 @@ export default {
             } else if(messageFragment.startsWith('http://') || messageFragment.startsWith('https://')){
                 this.components.push({
                     type: 'url',
-                    data: messageFragment
+                    data: messageFragment.trim()
                 })
             } else {
                 this.components.push({

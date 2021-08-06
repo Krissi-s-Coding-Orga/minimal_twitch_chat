@@ -6,6 +6,9 @@
   padding-left: 10px;
   padding-right: 10px;
 }
-.message_font > img {
+.message-font > img {
   vertical-align: middle;
+}
+.message-url {
+  text-decoration: none;
 }
