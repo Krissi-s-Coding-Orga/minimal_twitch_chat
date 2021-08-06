@@ -4,12 +4,12 @@
 <template>
   <div id="chat-container">
     <div id="chat-content" @scroll="handleScroll(this)">
-      <message-panel
+      <message-component
         v-for="(data, id) in messages"
         :key="id"
         :message="data.message"
         :userstate="data.userstate"
-      ></message-panel>
+      ></message-component>
     </div>
     <v-btn id="reactive-button" v-if="userScrolled" @click="renableAutoScroll()" elevation="0" :style="{ backgroundColor: getThemeColor() }">
         Auto Scroll
@@ -22,10 +22,10 @@ import Vue from "vue";
 
 import { config } from "@/main";
 
-import MessagePanel from "../components/panels/MessagePanel.vue";
+import MessageComponent from "../components/MessageComponent.vue";
 
 export default {
-  components: { MessagePanel },
+  components: { MessageComponent },
   data: function() {
     return {
       colordata: {},
