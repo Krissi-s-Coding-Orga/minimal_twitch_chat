@@ -58,6 +58,9 @@ export default {
             if(config.colors.change_background) {
                 classes = classes + " message-switching"
             }
+            if(this.userstate['message-type'] === 'action') {
+                classes = classes + " message-action"
+            }
             if(typeof(this.userstate['msg-id']) === 'undefined') {
                 return classes 
             }
@@ -107,6 +110,7 @@ export default {
         }
     },
     created() {
+        console.log(this.userstate)
         this.badges = this.userstate.badges
         const messageFragments = this.message.split(' ')
         for(let index in messageFragments) {
