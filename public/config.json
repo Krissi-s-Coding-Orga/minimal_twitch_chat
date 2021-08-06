@@ -14,7 +14,9 @@
         "hide_deleted_message": false,
         "font_size": "15px",
         "emote_size": "25px",
-        "badge_size": "20px"
+        "badge_size": "20px",
+        "max_messages": 100,
+        "trigger_offset": 150
     },
     "channel": "krissi"
 }

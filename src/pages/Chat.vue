@@ -71,7 +71,7 @@ export default {
 
       this.freshMessage = true
 
-      if (Object.keys(this.messages).length > 60) {
+      if (Object.keys(this.messages).length > config.misc.max_messages) {
         Vue.delete(this.messages, Object.keys(this.messages)[0]);
       }
 
@@ -139,7 +139,7 @@ export default {
     handleScroll () {
         let element = document.getElementById("chat-content")
         let currentMax = element.scrollHeight - element.scrollTop
-        if(currentMax.toFixed() <= element.clientHeight + 50) {
+        if(currentMax.toFixed() <= element.clientHeight + config.misc.trigger_offset) {
             if(this.freshMessage) {
                 this.freshMessage = false
                 return
