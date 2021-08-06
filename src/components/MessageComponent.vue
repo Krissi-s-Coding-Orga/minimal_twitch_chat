@@ -82,7 +82,6 @@ export default {
             return config.misc.badge_size
         },
         getBadgeImage(badgeType, badgeData) {
-            console.log(badgeType)
             if(typeof(this.channelbadges.badge_sets[badgeType]) !== 'undefined') {
                 let badgets = this.channelbadges.badge_sets[badgeType].versions
                 if(typeof(badgets) === 'undefined') {
@@ -96,8 +95,6 @@ export default {
                 let badgets = this.globalbadges.badge_sets[badgeType].versions
                 return badgets[badgeData].image_url_2x
             }
-            console.log(this.globalbadges)
-            console.log(badgeType + ':' + badgeData)
         },
         getEmote(messageFragment) {
             for(let emoteId in this.userstate.emotes) {
