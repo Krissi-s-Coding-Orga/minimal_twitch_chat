@@ -2,7 +2,7 @@
 </style>
 
 <template>
-    <div :class="getMessageClass()" :style="{ fontSize:getFontSize() }">
+    <div :class="getMessageClass()" :style="{ fontSize:getFontSize(),backgroundColor:getBackgroundColor() }">
         <img v-for="(badgeData, index) in badges"
             class="badge"
             :style="{ height:getBadgeSize(), width:getBadgeSize() }"
@@ -45,12 +45,26 @@ export default {
         }
     },
     methods: {
-        getMessageClass: function() {
-            if(config.colors.change_background) {
-                return "message-switching message"
-            } else {
-                return "message"
+        getBackgroundColor: function() {
+            if(typeof(this.userstate['msg-id']) === 'undefined') {
+                return
             }
+            if(this.userstate['msg-id'] === 'highlighted-message') {
+                return this.getThemeColor()
+            }
+        },
+        getMessageClass: function() {
+            let classes = "message"
+            if(config.colors.change_background) {
+                classes = classes + " message-switching"
+            }
+            if(typeof(this.userstate['msg-id']) === 'undefined') {
+                return classes 
+            }
+            if(this.userstate['msg-id'] === 'highlighted-message') {
+                classes = classes + " message-highlighted"
+            }
+            return classes 
         },
         getThemeColor: function() {
             return config.colors.color
@@ -68,13 +82,19 @@ export default {
             return config.misc.badge_size
         },
         getBadgeImage(badgeType, badgeData) {
+            console.log(badgeType)
             if(typeof(this.channelbadges.badge_sets[badgeType]) !== 'undefined') {
                 let badgets = this.channelbadges.badge_sets[badgeType].versions
-                return badgets[badgeData].image_url_4x
+                if(typeof(badgets) === 'undefined') {
+                    badgets = this.channelbadges.badge_sets[badgeType]
+                }
+                if(typeof(badgets[badgeData]) !== 'undefined') { 
+                    return badgets[badgeData].image_url_2x
+                }
             }
             if(typeof(this.globalbadges.badge_sets[badgeType]) !== 'undefined') {
                 let badgets = this.globalbadges.badge_sets[badgeType].versions
-                return badgets[badgeData].image_url_4x
+                return badgets[badgeData].image_url_2x
             }
             console.log(this.globalbadges)
             console.log(badgeType + ':' + badgeData)
@@ -98,7 +118,7 @@ export default {
             if(typeof(emote) !== 'undefined') {
                 this.components.push({
                     type: 'image',
-                    data: 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote + '/default/dark/4.0'
+                    data: 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote + '/default/dark/2.0'
                 })
             } else if(messageFragment.startsWith('http://') || messageFragment.startsWith('https://')){
                 this.components.push({
