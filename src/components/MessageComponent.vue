@@ -2,7 +2,7 @@
 </style>
 
 <template>
-    <div class="message" :style="{ fontSize:getFontSize() }">
+    <div :class="getMessageClass()" :style="{ fontSize:getFontSize() }">
         <img v-for="(badgeData, index) in badges"
             class="badge"
             :style="{ height:getBadgeSize(), width:getBadgeSize() }"
@@ -45,6 +45,13 @@ export default {
         }
     },
     methods: {
+        getMessageClass: function() {
+            if(config.colors.change_background) {
+                return "message-switching message"
+            } else {
+                return "message"
+            }
+        },
         getThemeColor: function() {
             return config.colors.color
         },

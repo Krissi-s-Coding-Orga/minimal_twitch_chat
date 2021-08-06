@@ -1,7 +1,8 @@
 {
     "colors":{
         "dark_mode": true,
-        "color": "#6441a5"
+        "color": "#6441a5",
+        "change_background": false
     },
     "notifications": {
 
