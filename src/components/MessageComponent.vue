@@ -32,13 +32,11 @@
     </div>
 </template>
 
-
-
 <script>
 import { config } from "@/main"
 
 export default {
-    props: ['channel', 'message', 'userstate'],
+    props: ['channelbadges', 'message', 'userstate'],
     data: function() {
         return {
             components: []
@@ -69,7 +67,7 @@ export default {
     },
     created() {
         console.log(this.userstate.badges)
-        console.log(this.userstate.room_id)
+        console.log(this.channelbadges)
         const messageFragments = this.message.split(' ')
         for(let index in messageFragments) {
             let messageFragment = messageFragments[index]

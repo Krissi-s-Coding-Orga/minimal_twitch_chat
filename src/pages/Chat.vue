@@ -9,7 +9,7 @@
         :key="id"
         :message="data.message"
         :userstate="data.userstate"
-        :channel="data.channel"
+        :channelbadges="channelBadges"
       ></message-component>
     </div>
     <v-btn id="reactive-button" v-if="userScrolled" @click="renableAutoScroll()" elevation="0" :style="{ backgroundColor: getThemeColor() }">
@@ -19,11 +19,12 @@
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from "vue"
+import axios from "axios"
 
-import { config } from "@/main";
+import { config } from "@/main"
 
-import MessageComponent from "../components/MessageComponent.vue";
+import MessageComponent from "../components/MessageComponent.vue"
 
 export default {
   components: { MessageComponent },
@@ -31,6 +32,7 @@ export default {
     return {
       colordata: {},
       messages: {},
+      channelBadges: {},
       userScrolled: false,
       scrollInterval: 0,
       freshMessage: false,
@@ -54,8 +56,12 @@ export default {
     };
   },
   created() {
-    this.$client.on("message", (channel, userstate, message, self) => {
-      if (self) return;
+    this.$client.on("message", async (channel, userstate, message, self) => {
+      if (self) return
+
+      if(Object.keys(this.channelBadges).length === 0) {
+        await this.getChannelBadges(userstate['room-id'])
+      }
 
       this.freshMessage = true
 
@@ -73,6 +79,7 @@ export default {
         userstate: userstate,
         byuser: userstate["user-id"],
       })
+      
       if(!this.userScrolled) {
         setTimeout(() => {
             this.renableAutoScroll()
@@ -106,6 +113,10 @@ export default {
       clearInterval(this.scrollInterval)
   },
   methods: {
+    getChannelBadges: async function(roomId) {
+      let requestBadges = await axios(`https://badges.twitch.tv/v1/badges/channels/${roomId}/display?language=en`)
+      this.channelBadges = requestBadges.data
+    },
     getThemeColor: function() {
         return config.colors.color
     },
