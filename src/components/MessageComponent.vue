@@ -38,7 +38,7 @@
 import { config } from "@/main"
 
 export default {
-    props: ['message', 'userstate'],
+    props: ['channel', 'message', 'userstate'],
     data: function() {
         return {
             components: []
@@ -68,6 +68,8 @@ export default {
         }
     },
     created() {
+        console.log(this.userstate.badges)
+        console.log(this.channel)
         const messageFragments = this.message.split(' ')
         for(let index in messageFragments) {
             let messageFragment = messageFragments[index]

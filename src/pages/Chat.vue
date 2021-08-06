@@ -9,6 +9,7 @@
         :key="id"
         :message="data.message"
         :userstate="data.userstate"
+        :channel="data.channel"
       ></message-component>
     </div>
     <v-btn id="reactive-button" v-if="userScrolled" @click="renableAutoScroll()" elevation="0" :style="{ backgroundColor: getThemeColor() }">
@@ -67,6 +68,7 @@ export default {
       }
 
       Vue.set(this.messages, userstate.id, {
+        channel: channel,
         message: message,
         userstate: userstate,
         byuser: userstate["user-id"],
