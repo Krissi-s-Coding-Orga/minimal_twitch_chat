@@ -88,8 +88,9 @@ export default {
       
       if(!this.userScrolled) {
         setTimeout(() => {
-            this.renableAutoScroll()
-            this.userScrolled = false
+          let element = document.getElementById("chat-content");
+          element.scrollTop = element.scrollHeight
+          this.userScrolled = false
         },25)
       }
     });
