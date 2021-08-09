@@ -88,9 +88,9 @@ export default {
       
       if(!this.userScrolled) {
         setTimeout(() => {
+          this.freshMessage = true
           let element = document.getElementById("chat-content");
           element.scrollTop = element.scrollHeight
-          this.userScrolled = false
         },25)
       }
     });
