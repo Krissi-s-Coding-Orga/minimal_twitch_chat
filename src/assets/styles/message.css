@@ -17,6 +17,9 @@
 .message-url {
   text-decoration: none;
 }
+.message-highlighted a {
+  color: #000 !important;
+}
 .badge {
   margin-right: 2px;
   border-radius: 4px;

@@ -2,8 +2,8 @@
 </style>
 
 <template>
-  <div id="chat-container">
-    <div id="chat-content" @scroll="handleScroll(this)">
+  <div id="chat-container" :class="getContainerClasses()">
+    <div id="chat-content" @scroll="handleScroll(this)" :class="getContentClasses()">
       <message-component
         v-for="(data, id) in messages"
         :key="id"
@@ -89,7 +89,11 @@ export default {
       if(!this.userScrolled) {
         setTimeout(() => {
           this.freshMessage = true
-          let element = document.getElementById("chat-content");
+          let element = document.getElementById("chat-content")
+          if(config.misc.invert_chat) {
+            element.scrollTop = -element.scrollHeight
+            return
+          }
           element.scrollTop = element.scrollHeight
         },25)
       }
@@ -120,6 +124,20 @@ export default {
       clearInterval(this.scrollInterval)
   },
   methods: {
+    getContentClasses: () => {
+      let classes = ''
+      if(config.misc.invert_chat) {
+        classes = `${classes} invert-chat-content`
+      }
+      return classes
+    },
+    getContainerClasses: () => {
+      let classes = ''
+      if(config.misc.invert_chat) {
+        classes = `${classes} invert-chat-container`
+      }
+      return classes
+    },
     getChannelBadges: async function(roomId) {
       let requestBadges = await axios(`https://badges.twitch.tv/v1/badges/channels/${roomId}/display?language=en`)
       this.channelBadges = requestBadges.data
@@ -133,13 +151,21 @@ export default {
     },
     renableAutoScroll() {
         this.freshMessage = true
-        let element = document.getElementById("chat-content");
+        let element = document.getElementById("chat-content")
+        if(config.misc.invert_chat) {
+          element.scrollTop = -element.scrollHeight
+          this.userScrolled = false
+          return
+        }
         element.scrollTop = element.scrollHeight
         this.userScrolled = false
     },
     handleScroll () {
         let element = document.getElementById("chat-content")
         let currentMax = element.scrollHeight - element.scrollTop
+        if(config.misc.invert_chat) {
+          currentMax = element.scrollTop - element.scrollHeight
+        }
         if(currentMax.toFixed() <= element.clientHeight + config.misc.trigger_offset) {
             if(this.freshMessage) {
                 this.freshMessage = false

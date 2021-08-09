@@ -19,7 +19,7 @@ html {
   display: -ms-flexbox;
   display: flex;
   position: absolute;
-  word-break: break-all;
+  word-break: break-word;
   bottom: 0;
   left: 0;
   height: 100%;
@@ -34,4 +34,15 @@ html {
   -ms-flex-pack: end;
   justify-content: flex-end;
   align-items: stretch;
+}
+
+.invert-chat-container {
+  justify-content: flex-start !important;
+  -webkit-box-pack: start !important;
+  -ms-flex-pack: start !important;
+}
+
+.invert-chat-content {
+  display: flex;
+  flex-direction: column-reverse;
 }

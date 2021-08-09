@@ -12,6 +12,7 @@
     },
     "misc": {
         "hide_deleted_message": false,
+        "invert_chat": true,
         "font_size": "15px",
         "emote_size": "25px",
         "badge_size": "20px",
