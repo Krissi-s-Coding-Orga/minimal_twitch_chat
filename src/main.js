@@ -4,7 +4,7 @@ import vuetify from './plugins/vuetify'
 import VueResource from 'vue-resource'
 import './components'
 import store from './store'
-import vueHeadful from 'vue-headful';
+import vueHeadful from 'vue-headful'
 import tmi from 'tmi.js'
 
 export const bus = new Vue()

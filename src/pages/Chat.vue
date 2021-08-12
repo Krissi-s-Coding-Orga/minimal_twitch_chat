@@ -9,8 +9,6 @@
         :key="id"
         :message="data.message"
         :userstate="data.userstate"
-        :channelbadges="channelBadges"
-        :globalbadges="globalBadges"
       ></message-component>
     </div>
     <v-btn id="reactive-button" v-if="userScrolled" @click="renableAutoScroll()" elevation="0" :style="{ backgroundColor: getThemeColor() }">
@@ -21,7 +19,8 @@
 
 <script>
 import Vue from "vue"
-import axios from "axios"
+
+import chatUtil from "@/plugins/chatUtil"
 
 import { config } from "@/main"
 
@@ -33,8 +32,6 @@ export default {
     return {
       colordata: {},
       messages: {},
-      channelBadges: {},
-      globalBadges: {},
       userScrolled: false,
       scrollInterval: 0,
       freshMessage: false,
@@ -61,13 +58,7 @@ export default {
     this.$client.on("message", async (channel, userstate, message, self) => {
       if (self) return
 
-      if(Object.keys(this.channelBadges).length === 0) {
-        await this.getChannelBadges(userstate['room-id'])
-      }
-
-      if(Object.keys(this.globalBadges).length === 0) {
-        await this.getGlobalBadges()
-      }
+      await chatUtil.retrieveBadges(userstate['room-id'])
 
       this.freshMessage = true
 
@@ -137,14 +128,6 @@ export default {
         classes = `${classes} invert-chat-container`
       }
       return classes
-    },
-    getChannelBadges: async function(roomId) {
-      let requestBadges = await axios(`https://badges.twitch.tv/v1/badges/channels/${roomId}/display?language=en`)
-      this.channelBadges = requestBadges.data
-    },
-    getGlobalBadges: async function() {
-      let requestBadges = await axios(`https://badges.twitch.tv/v1/badges/global/display`)
-      this.globalBadges = requestBadges.data
     },
     getThemeColor: function() {
         return config.colors.color

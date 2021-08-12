@@ -17,7 +17,7 @@
             </span>
         </template>
         <template v-else>
-            <template v-for="(data, index) in components">
+            <template v-for="(data, index) in getComponents()">
                 <img v-if="data.type === 'image'" :style="{ height:getEmoteSize() }" :src="data.data" :key="index"/>
                 <a class="message-url" v-else-if="data.type === 'url'" 
                     :key="index" 
@@ -34,14 +34,15 @@
 </template>
 
 <script>
+import chatUtil from "@/plugins/chatUtil"
+
 import { config } from "@/main"
 
 export default {
-    props: ['channelbadges', 'globalbadges', 'message', 'userstate'],
+    props: ['message', 'userstate'],
     data: function() {
         return {
-            badges: [],
-            components: []
+            badges: []
         }
     },
     methods: {
@@ -85,53 +86,14 @@ export default {
             return config.misc.badge_size
         },
         getBadgeImage(badgeType, badgeData) {
-            if(typeof(this.channelbadges.badge_sets[badgeType]) !== 'undefined') {
-                let badgets = this.channelbadges.badge_sets[badgeType].versions
-                if(typeof(badgets) === 'undefined') {
-                    badgets = this.channelbadges.badge_sets[badgeType]
-                }
-                if(typeof(badgets[badgeData]) !== 'undefined') { 
-                    return badgets[badgeData].image_url_2x
-                }
-            }
-            if(typeof(this.globalbadges.badge_sets[badgeType]) !== 'undefined') {
-                let badgets = this.globalbadges.badge_sets[badgeType].versions
-                return badgets[badgeData].image_url_2x
-            }
+            return chatUtil.getBadgeUrl(badgeType, badgeData) 
         },
-        getEmote(messageFragment) {
-            for(let emoteId in this.userstate.emotes) {
-                let emotePosition = this.userstate.emotes[emoteId][0].split('-')
-                if(this.message.indexOf(messageFragment) === Number(emotePosition[0])) {
-                    return emoteId
-                }
-            }
-            return
+        getComponents() {
+            return chatUtil.parseComponents(this.message, this.userstate)
         }
     },
     created() {
         this.badges = this.userstate.badges
-        const messageFragments = this.message.split(' ')
-        for(let index in messageFragments) {
-            let messageFragment = messageFragments[index]
-            let emote = this.getEmote(messageFragment)
-            if(typeof(emote) !== 'undefined') {
-                this.components.push({
-                    type: 'image',
-                    data: 'https://static-cdn.jtvnw.net/emoticons/v2/' + emote + '/default/dark/2.0'
-                })
-            } else if(messageFragment.startsWith('http://') || messageFragment.startsWith('https://')){
-                this.components.push({
-                    type: 'url',
-                    data: messageFragment.trim()
-                })
-            } else {
-                this.components.push({
-                    type: 'text',
-                    data: messageFragment
-                })
-            }
-        }
     }
 }
 </script>
