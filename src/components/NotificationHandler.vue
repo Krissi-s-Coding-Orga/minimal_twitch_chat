@@ -16,6 +16,7 @@
 import Vue from "vue"
 
 import { config } from "@/main"
+import subs from "@/assets/meta_data/subs.json"
 
 import Notification from "./Notification.vue"
 
@@ -34,33 +35,26 @@ export default {
     },
     created() {
         
-        this.$client.on("message", async (channel, userstate, message, self) => {
-        if (self) return
-            if(message.startsWith('!notify')) {
-                Vue.set(this.notifications, 
-                    `debug:${userstate.id}`,
-                    {
-                        content: message,
-                        userstate: userstate,
-                        title: `Debug from ${userstate['display-name']}`
-                    })
-                setTimeout(() => {
-                    Vue.delete(this.notifications,
-                        `debug:${userstate.id}`)
-                }, config.notifications.timeout + 500)
-            }
-        })
-        
         this.$client.on("subscription", (channel, username, method, message, userstate) => {
-            console.log(userstate)
-            console.log(method)
+            let title = `${userstate['display-name']} just subscribed`
+
+            if(method.prime) {
+                title = subs.fresh.prime
+            } else {
+                title = subs.fresh[method.plan]
+            }
+
+            title = title.replace(
+                    /(\${username})/g,
+                    userstate['display-name']
+                )
 
             Vue.set(this.notifications, 
                 `sub:${userstate.id}`,
                 {
                     content: message,
                     userstate: userstate,
-                    title: `${userstate['display-name']} just subscribed`
+                    title: title
                 })
             setTimeout(() => {
                 Vue.delete(this.notifications,
@@ -68,17 +62,31 @@ export default {
             }, config.notifications.timeout + 500)
         })
         
-        this.$client.on("resub", (channel, username, months, message, userstate, methods) => {
-            console.log(userstate)
-            console.log(methods)
+        this.$client.on("resub", (channel, username, months, message, userstate, method) => {
+            let title = `${userstate['display-name']} just resubed`
             let cumulativeMonths = ~~userstate["msg-param-cumulative-months"]
+
+            if(method.prime) {
+                title = subs.resub.prime
+            } else {
+                title = subs.resub[method.plan]
+            }
+
+            title = title.replace(
+                    /(\${username})/g,
+                    userstate['display-name']
+                )
+                .replace(
+                    /(\${months})/g,
+                    cumulativeMonths
+                )
 
             Vue.set(this.notifications, 
                 `resub:${userstate.id}`,
                 {
                     content: message,
                     userstate: userstate,
-                    title: `${userstate['display-name']} subscribed for the ${cumulativeMonths} Month`
+                    title: title
                 })
             setTimeout(() => {
                 Vue.delete(this.notifications,
@@ -86,17 +94,72 @@ export default {
             }, config.notifications.timeout + 500)
         })
 
-        this.$client.on("subgift", (channel, username, months, recipient, userstate, methods) => {
-            console.log(userstate)
-            console.log(methods)
+        this.$client.on("subgift", (channel, username, months, recipient, userstate) => {
             let senderCount = ~~userstate["msg-param-sender-count"]
+            let title = subs.gifted[userstate['msg-param-sub-plan']]
+            let message = subs.gifted.message
+
+            console.log(userstate)
+
+            title = title.replace(
+                    /(\${username})/g,
+                    userstate['display-name']
+                )
+                .replace(
+                    /(\${gifted})/g,
+                    userstate['msg-param-recipient-display-name']
+                )
+
+            message = message.replace(
+                    /(\${count})/g,
+                    senderCount
+                )
 
             Vue.set(this.notifications, 
                 `giftsub:${userstate.id}`,
                 {
-                    content: '',
+                    content: message,
                     userstate: userstate,
-                    title: `${userstate['display-name']} gifted ${senderCount} Subs`
+                    title: title
+                })
+            setTimeout(() => {
+                Vue.delete(this.notifications,
+                    `giftsub:${userstate.id}`)
+            }, config.notifications.timeout + 500)
+        })
+
+        this.$client.on("giftpaidupgrade", (channel, username, sender, userstate) => {
+            let senderCount = ~~userstate["msg-param-sender-count"]
+            let giftedCount = ~~userstate["msg-param-recipient-count"]
+            let title = subs.giftedContinue[userstate['msg-param-sub-plan']]
+            let message = subs.giftedContinue.message
+
+            console.log(userstate)
+
+            title = title.replace(
+                    /(\${username})/g,
+                    sender
+                )
+                .replace(
+                    /(\${gifted})/g,
+                    username
+                )
+
+            message = message.replace(
+                    /(\${count})/g,
+                    senderCount
+                )
+                .replace(
+                    /(\${month})/g,
+                    giftedCount
+                )
+
+            Vue.set(this.notifications, 
+                `giftsub:${userstate.id}`,
+                {
+                    content: message,
+                    userstate: userstate,
+                    title: title
                 })
             setTimeout(() => {
                 Vue.delete(this.notifications,
@@ -105,16 +168,30 @@ export default {
         })
 
         this.$client.on("submysterygift", (channel, username, numbOfSubs, methods, userstate) => {
-            console.log(userstate)
-            console.log(methods)
             let senderCount = ~~userstate["msg-param-sender-count"]
+            let title = subs.gifted[userstate['msg-param-sub-plan']]
+            let message = subs.gifted.message
+
+            title = title.replace(
+                    /(\${username})/g,
+                    userstate['display-name']
+                )
+                .replace(
+                    /(\${count})/g,
+                    numbOfSubs
+                )
+
+            message = message.replace(
+                    /(\${count})/g,
+                    senderCount
+                )
 
             Vue.set(this.notifications, 
                 `mysterygiftsub:${userstate.id}`,
                 {
-                    content: '',
+                    content: message,
                     userstate: userstate,
-                    title: `${userstate['display-name']} gifted ${senderCount} Mystery Subs`
+                    title: title
                 })
             setTimeout(() => {
                 Vue.delete(this.notifications,

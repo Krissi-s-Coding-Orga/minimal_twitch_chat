@@ -18,13 +18,13 @@ Vue.use({
     install() {
         Vue.prototype.destroy = Vue.prototype.$destroy;
     },
-});
+})
 
-Vue.http.headers.common['Content-Type'] = 'application/json';
-Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
-Vue.http.headers.common['Accept'] = 'application/json, text/plain, */*';
-Vue.http.headers.common['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin';
-Vue.http.headers.common['Access-Control-Allow-Methods'] = 'POST, GET, PUT, OPTIONS, DELETE, OPTIONS';
+Vue.http.headers.common['Content-Type'] = 'application/json'
+Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
+Vue.http.headers.common['Accept'] = 'application/json, text/plain, */*'
+Vue.http.headers.common['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin'
+Vue.http.headers.common['Access-Control-Allow-Methods'] = 'POST, GET, PUT, OPTIONS, DELETE, OPTIONS'
 
 Vue.component('vue-headful', vueHeadful);
 

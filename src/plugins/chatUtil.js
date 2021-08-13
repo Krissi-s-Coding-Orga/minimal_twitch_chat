@@ -6,8 +6,8 @@ let globalBadges = {}
 export default { getBadgeUrl, parseComponents, retrieveBadges }
 
 async function retrieveBadges(roomId) {
-    if (channelBadges.length > 0 ||
-        globalBadges.length > 0) {
+    if (Object.keys(channelBadges).length > 0 ||
+        Object.keys(globalBadges).length > 0) {
         return 
     }
     await getChannelBadges(roomId)

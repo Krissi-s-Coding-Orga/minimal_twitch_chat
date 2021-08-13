@@ -1,0 +1,32 @@
+{
+    "fresh": {
+        "prime": "${username} subscribed with Prime",
+        "1000": "${username} subscribed on Tier 1",
+        "2000": "${username} subscribed on Tier 2",
+        "3000": "${username} subscribed on Tier 3"
+    },
+    "resub": {
+        "prime": "${username} resubed the ${month} Month with Prime",
+        "1000": "${username} resubed the ${month} Month on Tier 1",
+        "2000": "${username} resubed the ${month} Month on Tier 2",
+        "3000": "${username} resubed the ${month} Month on Tier 3"
+    },
+    "gifted": {
+        "1000":  "${username} gifted a Tier 1 sub for ${giftedname}",
+        "2000":  "${username} gifted a Tier 2 sub for ${giftedname}",
+        "3000":  "${username} gifted a Tier 3 sub for ${giftedname}",
+        "message": "${username} already gifted ${count} subs"
+    },
+    "giftedContinue": {
+        "1000":  "${username} continues Tier 1 sub for ${giftedname}",
+        "2000":  "${username} continues Tier 2 sub for ${giftedname}",
+        "3000":  "${username} continues Tier 3 sub for ${giftedname}",
+        "message": "${giftedname} has subbed for ${month} Months. \n ${username} already gifted ${count} subs"
+    },
+    "massGifted": {
+        "1000":  "${username} gifted ${count} Tier 1 subs",
+        "2000":  "${username} gifted ${count} Tier 2 subs",
+        "3000":  "${username} gifted ${count} Tier 3 subs",
+        "message": "${username} already gifted ${count} subs"
+    }
+}
