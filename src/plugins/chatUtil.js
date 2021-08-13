@@ -69,9 +69,11 @@ function getEmote(messageFragment, message, userstate) {
 async function getChannelBadges(roomId) {
     let requestBadges = await axios(`https://badges.twitch.tv/v1/badges/channels/${roomId}/display?language=en`)
     channelBadges = requestBadges.data
+    console.log(channelBadges)
 }
 
 async function getGlobalBadges() {
     let requestBadges = await axios(`https://badges.twitch.tv/v1/badges/global/display`)
     globalBadges = requestBadges.data
+    console.log(globalBadges)
 }
