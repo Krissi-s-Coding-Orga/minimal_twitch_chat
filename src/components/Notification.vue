@@ -6,12 +6,12 @@
                 flat 
                 dense>
                 <v-toolbar-title>
-                    <span class="subheading">
+                    <span class="subheading" :style="{ fontSize:getHeaderFontSize() }">
                         {{title}}
                     </span>
                 </v-toolbar-title>
             </v-toolbar>
-            <v-card-text class="pt-5">
+            <v-card-text class="pt-5 message" :style="{ fontSize:getFontSize(), marginBottom:getFontSize() }">
                 <div :class="getNotificationClass()">
                     <template v-for="(data, index) in getComponents()">
                         <img v-if="data.type === 'image'" :style="{ height:getEmoteSize() }" :src="data.data" :key="index"/>
@@ -56,13 +56,16 @@ export default {
             return config.notifications.timeout
         },
         getFontSize() {
-            return config.misc.font_size
+            return config.notifications.font_size
+        },
+        getHeaderFontSize() {
+            return config.notifications.header_font_size
         },
         getEmoteSize() {
-            return config.misc.emote_size
+            return config.notifications.emote_size
         },
         getBadgeSize() {
-            return config.misc.badge_size
+            return config.notifications.badge_size
         },
         getBadgeImage(badgeType, badgeData) {
             return chatUtil.getBadgeUrl(badgeType, badgeData) 
