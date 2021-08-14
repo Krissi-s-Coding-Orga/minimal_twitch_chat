@@ -77,7 +77,7 @@ export default {
                     userstate['display-name']
                 )
                 .replace(
-                    /(\${months})/g,
+                    /(\${month})/g,
                     cumulativeMonths
                 )
 
