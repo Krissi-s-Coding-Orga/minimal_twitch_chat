@@ -16,6 +16,10 @@ async function retrieveBadges(roomId) {
 
 function parseComponents(message, userstate) {
     const components = []
+    
+    if (message === null) { return components }
+    if (message.length === 0) { return components }
+    
     const messageFragments = message.split(' ')
     for(let index in messageFragments) {
         let messageFragment = messageFragments[index]
