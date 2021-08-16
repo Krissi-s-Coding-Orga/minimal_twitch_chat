@@ -38,6 +38,10 @@ export default {
         this.$client.on("subscription", (channel, username, method, message, userstate) => {
             let title = `${userstate['display-name']} just subscribed`
 
+            console.log('subscription')
+            console.log(userstate)
+            console.log(method)
+
             if(method.prime) {
                 title = subs.fresh.prime
             } else {
@@ -65,6 +69,11 @@ export default {
         this.$client.on("resub", (channel, username, months, message, userstate, method) => {
             let title = `${userstate['display-name']} just resubed`
             let cumulativeMonths = ~~userstate["msg-param-cumulative-months"]
+
+            console.log('resub')
+            console.log(userstate)
+            console.log(method)
+            console.log(months)
 
             if(method.prime) {
                 title = subs.resub.prime
@@ -99,7 +108,10 @@ export default {
             let title = subs.gifted[userstate['msg-param-sub-plan']]
             let message = subs.gifted.message
 
+            console.log('subgift')
             console.log(userstate)
+            console.log(recipient)
+            console.log(months)
 
             title = title.replace(
                     /(\${username})/g,
@@ -134,6 +146,7 @@ export default {
             let title = subs.giftedContinue[userstate['msg-param-sub-plan']]
             let message = subs.giftedContinue.message
 
+            console.log('giftpaidupgrade')
             console.log(userstate)
 
             title = title.replace(

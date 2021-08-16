@@ -16,7 +16,8 @@ async function retrieveBadges(roomId) {
 
 function parseComponents(message, userstate) {
     const components = []
-    
+
+    if (typeof (message) === 'undefined') { return components }
     if (message === null) { return components }
     if (message.length === 0) { return components }
     
