@@ -8,7 +8,7 @@
     },
     "dependencies": {
         "axios": "^0.21.1",
-        "core-js": "^3.16.1",
+        "core-js": "^3.16.2",
         "object-assign-deep": "^0.4.0",
         "tmi.js": "^1.8.4",
         "vue": "^2.6.14",
