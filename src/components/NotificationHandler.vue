@@ -102,9 +102,9 @@ export default {
             }, config.notifications.timeout + 500)
         })
 
-        this.$client.on("subgift", (channel, username, months, recipient, userstate) => {
+        this.$client.on("subgift", (channel, username, months, recipient, methods, userstate) => {
             let senderCount = ~~userstate['msg-param-sender-count']
-            let title = subs.gifted[userstate.plan]
+            let title = subs.gifted[methods.plan]
             let message = subs.gifted.message
 
             console.log('subgift')
