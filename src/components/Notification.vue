@@ -50,7 +50,7 @@ export default {
             return classes 
         },
         getThemeColor: () => {
-            return config.colors.color
+            return localStorage.themeColor
         },
         getTimeout: () => {
             return config.notifications.timeout

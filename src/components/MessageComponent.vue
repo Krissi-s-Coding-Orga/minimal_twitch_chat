@@ -56,7 +56,7 @@ export default {
         },
         getMessageClass: function() {
             let classes = "message"
-            if(config.colors.change_background) {
+            if(localStorage.switchBackground == 'true') {
                 classes = classes + " message-switching"
             }
             if(this.userstate['message-type'] === 'action') {
@@ -71,7 +71,7 @@ export default {
             return classes 
         },
         getThemeColor: function() {
-            return config.colors.color
+            return localStorage.themeColor
         },
         isDeleted() {
             return this.message === null

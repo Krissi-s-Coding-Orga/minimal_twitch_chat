@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { connecting, config } from "@/main"
+import { connecting } from "@/main"
 
 export default {
     data: () => ({
@@ -27,7 +27,7 @@ export default {
     }),
     methods: {
         getThemeColor: function() {
-            return config.colors.color
+            return localStorage.themeColor
         }
     },
     created() {

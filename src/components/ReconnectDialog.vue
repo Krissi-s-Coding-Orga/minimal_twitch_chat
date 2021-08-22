@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import { config } from "@/main"
 export default {
     data: function() {
         return {
@@ -49,7 +48,7 @@ export default {
             this.$client.connect()
         },
         getThemeColor: function() {
-            return config.colors.color
+            return localStorage.themeColor
         }
     },
     created() {

@@ -1,0 +1,13 @@
+#settings-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: #fff;
+  padding: 10px;
+}
+.theme--dark #settings-container {
+  background: #121212;
+}

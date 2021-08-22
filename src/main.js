@@ -35,8 +35,8 @@ fetch('/config.json')
     
     config = file
     
-    const twitchClient = new tmi.Client({
-        channels: [file.channel],
+    let twitchClient = new tmi.Client({
+        channels: [localStorage.channel],
         connection: {
             reconnect: true,
             maxReconnectAttempts: 3,
@@ -62,6 +62,10 @@ fetch('/config.json')
     })
 
     twitchClient.connect()
+    
+    bus.$on('reconnectClient', () => {
+        location.reload()
+    })
 })
 .catch((error) => {
     let p = document.createElement("p");

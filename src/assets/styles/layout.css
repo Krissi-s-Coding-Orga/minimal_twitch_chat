@@ -6,6 +6,12 @@ html {
   margin: 5px 0;
 }
 
+#settings_button {
+  position: fixed;
+  left: 10px;
+  top: 15px;
+}
+
 #notifications {
   position: fixed;
   left: 0;

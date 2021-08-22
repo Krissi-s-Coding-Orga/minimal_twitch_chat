@@ -3,6 +3,19 @@
 
 <template>
   <div id="chat-container" :class="getContainerClasses()">
+    <v-btn
+      class="mx-2"
+      id="settings_button"
+      v-show="settingsTimeout > 0"
+      fab
+      dark
+      :color="getThemeColor()"
+      @click="openSettings()"
+    >
+      <v-icon dark>
+        mdi-wrench
+      </v-icon>
+    </v-btn>
     <div id="chat-content" @scroll="handleScroll(this)" :class="getContentClasses()">
       <message-component
         v-for="(data, id) in messages"
@@ -22,7 +35,7 @@ import Vue from "vue"
 
 import chatUtil from "@/plugins/chatUtil"
 
-import { config } from "@/main"
+import { config, bus } from "@/main"
 
 import MessageComponent from "../components/MessageComponent.vue"
 
@@ -34,6 +47,8 @@ export default {
       messages: {},
       userScrolled: false,
       scrollInterval: 0,
+      settingsInterval: 0,
+      settingsTimeout: 0,
       freshMessage: false,
       default_colors: [
         "#FF0000",
@@ -88,33 +103,51 @@ export default {
         }
         element.scrollTop = element.scrollHeight
       },100)
-    });
+    })
+
     this.$client.on(
       "messagedeleted",
       (channel, username, deletedMessage, userstate) => {
         const messageId = userstate["target-msg-id"];
         this.deleteMessage(messageId)
       }
-    );
+    )
+
     this.$client.on("clearchat", () => {
       this.messages = {};
-    });
+    })
+
     this.$client.on(
       "timeout",
       (channel, username, reason, duration, userstate) => {
         const userId = userstate["target-user-id"];
         this.handleBan(userId);
       }
-    );
+    )
+
     this.$client.on("ban", (channel, username, reason, userstate) => {
       const userId = userstate["target-user-id"];
       this.handleBan(userId);
-    });
+    })
+
+    window.addEventListener('mousemove', () => {
+      this.settingsTimeout = 4
+    })
+
+    this.settingsInterval = setInterval(() => {
+      if(this.settingsTimeout > 0) {
+        this.settingsTimeout--
+      }
+    }, 1000)
   },
   destroyed() {
       clearInterval(this.scrollInterval)
+      clearInterval(this.settingsInterval)
   },
   methods: {
+    openSettings: () => {
+      bus.$emit('openSettings')
+    },
     getContentClasses: () => {
       let classes = ''
       if(config.misc.invert_chat) {
@@ -130,7 +163,7 @@ export default {
       return classes
     },
     getThemeColor: function() {
-        return config.colors.color
+        return localStorage.themeColor
     },
     renableAutoScroll() {
         this.freshMessage = true
@@ -154,7 +187,7 @@ export default {
           return 
         }
         if(currentMax.toFixed() <= element.clientHeight + config.misc.trigger_offset) {
-            this.userScrolled = true
+          this.userScrolled = true
         }
     },
     generateUserColor(userid) {

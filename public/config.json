@@ -12,9 +12,6 @@
         "header_font_size": "25px",
         "min_bits": 10
     },
-    "easter_eggs": {
-
-    },
     "misc": {
         "hide_deleted_message": false,
         "invert_chat": true,
