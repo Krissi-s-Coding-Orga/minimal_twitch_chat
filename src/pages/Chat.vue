@@ -76,18 +76,18 @@ export default {
         userstate: userstate,
         byuser: userstate["user-id"],
       })
+
+      if(this.userScrolled) { return }
       
-      if(!this.userScrolled) {
-        setTimeout(() => {
-          this.freshMessage = true
-          let element = document.getElementById("chat-content")
-          if(config.misc.invert_chat) {
-            element.scrollTop = -element.scrollHeight
-            return
-          }
-          element.scrollTop = element.scrollHeight
-        },25)
-      }
+      setTimeout(() => {
+        this.freshMessage = true
+        let element = document.getElementById("chat-content")
+        if(config.misc.invert_chat) {
+          element.scrollTop = -element.scrollHeight
+          return
+        }
+        element.scrollTop = element.scrollHeight
+      },100)
     });
     this.$client.on(
       "messagedeleted",
@@ -149,11 +149,11 @@ export default {
         if(config.misc.invert_chat) {
           currentMax = element.scrollTop - element.scrollHeight
         }
+        if(this.freshMessage) { 
+          this.freshMessage = false
+          return 
+        }
         if(currentMax.toFixed() <= element.clientHeight + config.misc.trigger_offset) {
-            if(this.freshMessage) {
-                this.freshMessage = false
-                return
-            }
             this.userScrolled = true
         }
     },
