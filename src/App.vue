@@ -2,6 +2,7 @@
 @import "./assets/styles/fonts.css";
 @import "./assets/styles/layout.css";
 @import "./assets/styles/message.css";
+@import "./assets/styles/notification.css";
 
 </style>
 

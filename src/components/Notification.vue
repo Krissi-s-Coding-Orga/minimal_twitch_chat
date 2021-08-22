@@ -6,7 +6,7 @@
                 flat 
                 dense>
                 <v-toolbar-title>
-                    <span class="subheading" :style="{ fontSize:getHeaderFontSize() }">
+                    <span class="title_marquee" :style="{ fontSize:getHeaderFontSize() }">
                         {{title}}
                     </span>
                 </v-toolbar-title>

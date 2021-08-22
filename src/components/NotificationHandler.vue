@@ -35,6 +35,24 @@ export default {
     },
     created() {
         
+        this.$client.on("message", async (channel, userstate, message, self) => {
+            if (self) return
+            if(!userstate.mod && !Object.keys(userstate.badges).includes('vip')) { return }
+            if(!message.startsWith('!notify')) { return }
+            
+
+            Vue.set(this.notifications, 
+                `notify:${userstate.id}`,
+                {
+                    content: message,
+                    userstate: userstate,
+                    title: `This is a Dev Notification from ${userstate['display-name']} just ignore it.`
+                })
+            setTimeout(() => {
+                Vue.delete(this.notifications,
+                    `notify:${userstate.id}`)
+            }, config.notifications.timeout + 500)
+        })
         this.$client.on("subscription", (channel, username, method, message, userstate) => {
             let title = `${userstate['display-name']} just subscribed`
 
@@ -104,8 +122,8 @@ export default {
         })
 
         this.$client.on("subgift", (channel, username, months, recipient, userstate) => {
-            let senderCount = ~~userstate["msg-param-sender-count"]
-            let title = subs.gifted[userstate['msg-param-sub-plan']]
+            let senderCount = ~~userstate['msg-param-sender-count']
+            let title = subs.gifted[userstate.plan]
             let message = subs.gifted.message
 
             console.log('subgift')
@@ -119,7 +137,7 @@ export default {
                 )
                 .replace(
                     /(\${gifted})/g,
-                    userstate['msg-param-recipient-display-name']
+                    recipient
                 )
 
             message = message.replace(
