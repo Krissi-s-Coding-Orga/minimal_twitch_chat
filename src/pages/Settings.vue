@@ -3,9 +3,11 @@
         <v-row>
             <v-col class="col-12 col-md-6 col-lg-4">
                 <connection-settings></connection-settings>
+                <color-settings class="mt-6"></color-settings>
             </v-col>
             <v-col class="col-12 col-md-6 col-lg-4">
-                <color-settings></color-settings>
+              <notification-settings></notification-settings>
+              <dummy-notification class="mt-6"></dummy-notification>
             </v-col>
             <v-col class="col-12 col-md-6 col-lg-4">
                 <v-btn :color="themeColor" width="100%" @click="closeSettings()">Close settings</v-btn>
@@ -17,12 +19,13 @@
 import ColorSettings from '../components/panels/ColorSettings.vue'
 import { bus } from "@/main"
 import ConnectionSettings from '../components/panels/ConnectionSettings.vue';
+import NotificationSettings from '../components/panels/NotificationSettings.vue';
+import DummyNotification from '../components/panels/DummyNotification.vue';
 export default {
-  components: { ColorSettings, ConnectionSettings },
-    data: () => ({
-        themeColor:localStorage.themeColor
-    }),
-  
+  components: { ColorSettings, ConnectionSettings, NotificationSettings, DummyNotification },
+  data: () => ({
+    themeColor:localStorage.themeColor
+  }),
   methods: {
     closeSettings: () => {
       bus.$emit('closeSettings')
