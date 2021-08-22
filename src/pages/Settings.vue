@@ -24,9 +24,6 @@ export default {
     }),
   
   methods: {
-    getThemeColor: function() {
-        return localStorage.themeColor
-    },
     closeSettings: () => {
       bus.$emit('closeSettings')
     },
@@ -34,8 +31,8 @@ export default {
   computed: {
   },
   created() {
-    bus.$on('updateColor', (color) => {
-        this.themeColor = color
+    bus.$on('updateSettings', () => {
+      this.themeColor = localStorage.themeColor
     })
   }
 };

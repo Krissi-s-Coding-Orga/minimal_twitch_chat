@@ -47,33 +47,35 @@
             themeColor:localStorage.themeColor
         }),
         methods: {
-            updateColor: (color) => {
-                bus.$emit('updateColor', color)
+            updateSettings: () => {
+                bus.$emit('updateSettings')
             },
         },
         computed: {
             toggleDarkMode: {
                 get() {
-                    return localStorage.darkMode == 'true';
+                    return localStorage.darkMode === 'true';
                 },
                 set(enable) {
                     if(enable)
                         localStorage.setItem('darkMode', true)
                     else
                         localStorage.setItem('darkMode', false)
-                    return localStorage.darkMode == 'true'
+                    this.updateSettings()
+                    return localStorage.darkMode === 'true'
                 }
             },
             toggleSwitchingBackground: {
                 get() {
-                    return localStorage.switchBackground == 'true';
+                    return localStorage.switchBackground === 'true';
                 },
                 set(enable) {
                     if(enable)
                         localStorage.setItem('switchBackground', true)
                     else
                         localStorage.setItem('switchBackground', false)
-                    return localStorage.switchBackground == 'true'
+                    this.updateSettings()
+                    return localStorage.switchBackground === 'true'
                 }
             },
             switchThemeColor: {
@@ -83,7 +85,7 @@
                 set(color) {
                     localStorage.themeColor = color
                     this.themeColor = color
-                    this.updateColor(color)
+                    this.updateSettings()
                     return localStorage.themeColor
                 }
             }

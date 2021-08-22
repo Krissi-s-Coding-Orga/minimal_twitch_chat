@@ -212,7 +212,7 @@ export default {
         })
 
         this.$client.on("cheer", (channel, userstate, message) => {
-            if(userstate.bits < config.notifications.min_bits) { return }
+            if(userstate.bits < Number( localStorage.notificationMinBits)) { return }
 
             Vue.set(this.notifications, 
                 `cheer:${userstate.id}`,

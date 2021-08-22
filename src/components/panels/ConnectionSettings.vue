@@ -37,7 +37,7 @@
         components: {
         },
         data: () => ({
-            themeColor:localStorage.themeColor
+            themeColor: localStorage.themeColor
         }),
         methods: {
             reconnectClient: () => {
@@ -56,8 +56,8 @@
             }
         },
         created() {
-            bus.$on('updateColor', (color) => {
-                this.themeColor = color
+            bus.$on('updateSettings', () => {
+                this.themeColor = localStorage.themeColor
             })
         }
     }

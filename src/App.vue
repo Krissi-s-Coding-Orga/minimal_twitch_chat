@@ -46,6 +46,21 @@ export default {
             localStorage.darkMode = config.colors.dark_mode
             localStorage.themeColor = config.colors.color
             localStorage.switchBackground = config.colors.change_background
+
+            localStorage.notificationTimeout = config.notifications.timeout
+            localStorage.notificationFontSize = config.notifications.font_size
+            localStorage.notificationBadgeSize = config.notifications.badge_size
+            localStorage.notificationEmoteSize = config.notifications.emote_size
+            localStorage.notificationHeaderFontSize = config.notifications.header_font_size
+            localStorage.notificationMinBits = config.notifications.min_bits
+
+            localStorage.hideDeletedMessages = config.misc.hide_deleted_message
+            localStorage.invertChat = config.misc.invert_chat
+            localStorage.fontSize = config.misc.font_size
+            localStorage.emoteSize = config.misc.emote_size
+            localStorage.badgeSize = config.misc.badge_size
+            localStorage.maxMessages = config.misc.max_messages
+            localStorage.triggerOffset = config.triggerOffset
         }
         this.$vuetify.theme.dark = localStorage.darkMode == 'true'
         setInterval(() => {

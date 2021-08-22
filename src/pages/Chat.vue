@@ -35,7 +35,7 @@ import Vue from "vue"
 
 import chatUtil from "@/plugins/chatUtil"
 
-import { config, bus } from "@/main"
+import { bus } from "@/main"
 
 import MessageComponent from "../components/MessageComponent.vue"
 
@@ -77,7 +77,7 @@ export default {
 
       this.freshMessage = true
 
-      if (Object.keys(this.messages).length > config.misc.max_messages) {
+      if (Object.keys(this.messages).length > Number(localStorage.maxMessages)) {
         Vue.delete(this.messages, Object.keys(this.messages)[0]);
       }
 
@@ -97,7 +97,7 @@ export default {
       setTimeout(() => {
         this.freshMessage = true
         let element = document.getElementById("chat-content")
-        if(config.misc.invert_chat) {
+        if(localStorage.invertChat == 'true') {
           element.scrollTop = -element.scrollHeight
           return
         }
@@ -150,14 +150,14 @@ export default {
     },
     getContentClasses: () => {
       let classes = ''
-      if(config.misc.invert_chat) {
+      if(localStorage.invertChat == 'true') {
         classes = `${classes} invert-chat-content`
       }
       return classes
     },
     getContainerClasses: () => {
       let classes = ''
-      if(config.misc.invert_chat) {
+      if(localStorage.invertChat === 'true') {
         classes = `${classes} invert-chat-container`
       }
       return classes
@@ -168,7 +168,7 @@ export default {
     renableAutoScroll() {
         this.freshMessage = true
         let element = document.getElementById("chat-content")
-        if(config.misc.invert_chat) {
+        if(localStorage.invertChat === 'true') {
           element.scrollTop = -element.scrollHeight
           this.userScrolled = false
           return
@@ -179,14 +179,14 @@ export default {
     handleScroll () {
         let element = document.getElementById("chat-content")
         let currentMax = element.scrollHeight - element.scrollTop
-        if(config.misc.invert_chat) {
+        if(localStorage.invertChat === 'true') {
           currentMax = element.scrollTop - element.scrollHeight
         }
         if(this.freshMessage) { 
           this.freshMessage = false
           return 
         }
-        if(currentMax.toFixed() <= element.clientHeight + config.misc.trigger_offset) {
+        if(currentMax.toFixed() <= element.clientHeight + Number(localStorage.triggerOffset)) {
           this.userScrolled = true
         }
     },
@@ -209,7 +209,7 @@ export default {
       }
     },
     deleteMessage(messageId) {
-      if (config.misc.hide_deleted_message) {
+      if (localStorage.hideDeletedMessages === 'true') {
         Vue.delete(this.messages, messageId);
       } else {
         const oldMessage = this.messages[messageId];

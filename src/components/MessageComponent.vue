@@ -2,10 +2,10 @@
 </style>
 
 <template>
-    <div :class="getMessageClass()" :style="{ fontSize:getFontSize(),backgroundColor:getBackgroundColor() }">
+    <div :class="getMessageClass()" :style="{ fontSize: fontSize, backgroundColor: getBackgroundColor() }">
         <img v-for="(badgeData, index) in badges"
             class="badge"
-            :style="{ height:getBadgeSize(), width:getBadgeSize() }"
+            :style="{ height: badgeSize, width: badgeSize }"
             :key="index"
             :src="getBadgeImage(index, badgeData)"/>
         <span class="username" :style="{ color: userstate.color }">
@@ -18,11 +18,11 @@
         </template>
         <template v-else>
             <template v-for="(data, index) in getComponents()">
-                <img v-if="data.type === 'image'" :style="{ height:getEmoteSize() }" :src="data.data" :key="index"/>
+                <img v-if="data.type === 'image'" :style="{ height: emoteSize }" :src="data.data" :key="index"/>
                 <a class="message-url" v-else-if="data.type === 'url'" 
                     :key="index" 
                     :href="data.data" 
-                    :style="{ color:getThemeColor() }"
+                    :style="{ color: themeColor }"
                     target="_href">
                         {{data.data}}</a>
                 <template v-else>
@@ -36,12 +36,16 @@
 <script>
 import chatUtil from "@/plugins/chatUtil"
 
-import { config } from "@/main"
+import { bus } from "@/main"
 
 export default {
     props: ['message', 'userstate'],
     data: function() {
         return {
+            themeColor: localStorage.themeColor,
+            fontSize: localStorage.fontSize,
+            badgeSize: localStorage.badgeSize,
+            emoteSize: localStorage.emoteSize,
             badges: []
         }
     },
@@ -51,12 +55,12 @@ export default {
                 return
             }
             if(this.userstate['msg-id'] === 'highlighted-message') {
-                return this.getThemeColor()
+                return this.themeColor
             }
         },
         getMessageClass: function() {
             let classes = "message"
-            if(localStorage.switchBackground == 'true') {
+            if(localStorage.switchBackground === 'true') {
                 classes = classes + " message-switching"
             }
             if(this.userstate['message-type'] === 'action') {
@@ -70,20 +74,8 @@ export default {
             }
             return classes 
         },
-        getThemeColor: function() {
-            return localStorage.themeColor
-        },
         isDeleted() {
             return this.message === null
-        },
-        getFontSize() {
-            return config.misc.font_size
-        },
-        getEmoteSize() {
-            return config.misc.emote_size
-        },
-        getBadgeSize() {
-            return config.misc.badge_size
         },
         getBadgeImage(badgeType, badgeData) {
             return chatUtil.getBadgeUrl(badgeType, badgeData) 
@@ -94,6 +86,13 @@ export default {
     },
     created() {
         this.badges = this.userstate.badges
+        bus.$on('updateSettings', () => {
+            this.themeColor = localStorage.themeColor
+            this.fontSize = localStorage.fontSize
+            this.badgeSize = localStorage.badgeSize
+            this.emoteSize = localStorage.emoteSize
+            this.$forceUpdate()
+        })
     }
 }
 </script>

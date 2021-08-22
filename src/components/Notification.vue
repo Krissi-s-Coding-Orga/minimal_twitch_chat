@@ -6,19 +6,19 @@
                 flat 
                 dense>
                 <v-toolbar-title>
-                    <span class="title_marquee" :style="{ fontSize:getHeaderFontSize() }">
+                    <span class="title_marquee" :style="{ fontSize: headerFontSize }">
                         {{title}}
                     </span>
                 </v-toolbar-title>
             </v-toolbar>
-            <v-card-text class="pt-5 message" :style="{ fontSize:getFontSize(), marginBottom:getFontSize() }">
+            <v-card-text class="pt-5 message" :style="{ fontSize: fontSize, marginBottom: fontSize }">
                 <div :class="getNotificationClass()">
                     <template v-for="(data, index) in getComponents()">
-                        <img v-if="data.type === 'image'" :style="{ height:getEmoteSize() }" :src="data.data" :key="index"/>
+                        <img v-if="data.type === 'image'" :style="{ height: emoteSize }" :src="data.data" :key="index"/>
                         <a class="message-url" v-else-if="data.type === 'url'" 
                             :key="index" 
                             :href="data.data" 
-                            :style="{ color:getThemeColor() }"
+                            :style="{ color: themeColor }"
                             target="_href">
                                 {{data.data}}</a>
                         <template v-else>
@@ -27,19 +27,25 @@
                     </template>
                 </div>
             </v-card-text>
-            <v-progress-linear :color="getThemeColor()" v-model="determite"></v-progress-linear>
+            <v-progress-linear :color="themeColor" v-model="determite"></v-progress-linear>
         </v-card>
     </div>
 </template>
 <script>
 import chatUtil from "@/plugins/chatUtil"
 
-import { config } from "@/main"
+import { bus } from "@/main"
 
 export default {
     props: ['content', 'title', 'userstate'],
     data() {
         return {
+            themeColor: localStorage.themeColor,
+            fontSize: localStorage.notificationFontSize,
+            badgeSize: localStorage.notificationBadgeSize,
+            emoteSize: localStorage.notificationEmoteSize,
+            headerFontSize: localStorage.notificationHeaderFontSize,
+            timeout: localStorage.notificationTimeout,
             remaining: 0,
             determite: 100
         }
@@ -49,24 +55,6 @@ export default {
             let classes = "message"
             return classes 
         },
-        getThemeColor: () => {
-            return localStorage.themeColor
-        },
-        getTimeout: () => {
-            return config.notifications.timeout
-        },
-        getFontSize() {
-            return config.notifications.font_size
-        },
-        getHeaderFontSize() {
-            return config.notifications.header_font_size
-        },
-        getEmoteSize() {
-            return config.notifications.emote_size
-        },
-        getBadgeSize() {
-            return config.notifications.badge_size
-        },
         getBadgeImage(badgeType, badgeData) {
             return chatUtil.getBadgeUrl(badgeType, badgeData) 
         },
@@ -75,10 +63,18 @@ export default {
         }
     },
     created() {
-        this.remaining = this.getTimeout()
+        bus.$on('updateSettings', () => {
+            this.themeColor = localStorage.themeColor
+            this.fontSize = localStorage.notificationFontSize
+            this.badgeSize = localStorage.notificationBadgeSize
+            this.emoteSize = localStorage.notificationEmoteSize
+            this.headerFontSize = localStorage.notificationHeaderFontSize
+            this.timeout = localStorage.notificationTimeout
+        })
+        this.remaining = this.timeout
         setInterval(() => {
             this.remaining = this.remaining - 100
-            this.determite = (100 / this.getTimeout()) * this.remaining
+            this.determite = (100 / this.timeout) * this.remaining
         }, 100)
     }
 }
