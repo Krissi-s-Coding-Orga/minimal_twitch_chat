@@ -10,7 +10,7 @@
                 </v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-                <v-container px-0 py-0>
+                <v-container px-0 py-2>
                     <v-row>
                         <v-col class="py-2">
                             <v-text-field
@@ -19,7 +19,17 @@
                                 hide-details
                                 suffix="sec"
                                 type="number"
-                                label="Notification timeout"></v-text-field>
+                                label="Notification timeout"
+                                outlined></v-text-field>
+                        </v-col>
+                        <v-col class="py-2">
+                            <v-text-field
+                                :color="themeColor"
+                                v-model="changeMinBits"
+                                hide-details
+                                type="number"
+                                label="Minimum Bits"
+                                outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -30,10 +40,9 @@
                                 hide-details
                                 suffix="px"
                                 type="number"
-                                label="Header Font Size"></v-text-field>
+                                label="Header Font Size"
+                                outlined></v-text-field>
                         </v-col>
-                    </v-row>
-                    <v-row>
                         <v-col class="py-2">
                             <v-text-field
                                 :color="themeColor"
@@ -41,7 +50,8 @@
                                 hide-details
                                 suffix="px"
                                 type="number"
-                                label="Font Size"></v-text-field>
+                                label="Font Size"
+                                outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -52,17 +62,18 @@
                                 hide-details
                                 suffix="px"
                                 type="number"
-                                label="Emote Size"></v-text-field>
+                                label="Emote Size"
+                                outlined></v-text-field>
                         </v-col>
-                    </v-row>
-                    <v-row>
                         <v-col class="py-2">
                             <v-text-field
                                 :color="themeColor"
-                                v-model="changeMinBits"
+                                v-model="changeBadgeSize"
                                 hide-details
+                                suffix="px"
                                 type="number"
-                                label="Minimum Bits"></v-text-field>
+                                label="Badge Size"
+                                outlined></v-text-field>
                         </v-col>
                     </v-row>
                 </v-container>
