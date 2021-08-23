@@ -10,19 +10,23 @@
               <dummy-notification class="mt-6"></dummy-notification>
             </v-col>
             <v-col class="col-12 col-md-6 col-lg-4">
-                <v-btn :color="themeColor" width="100%" @click="closeSettings()">Close settings</v-btn>
+                <chat-settings></chat-settings>
+                <v-btn :color="themeColor" width="100%" @click="closeSettings()" class="mt-6">Close settings</v-btn>
             </v-col>
         </v-row>
     </div>
 </template>
 <script>
-import ColorSettings from '../components/panels/ColorSettings.vue'
 import { bus } from "@/main"
-import ConnectionSettings from '../components/panels/ConnectionSettings.vue';
-import NotificationSettings from '../components/panels/NotificationSettings.vue';
-import DummyNotification from '../components/panels/DummyNotification.vue';
+
+import ColorSettings from '../components/panels/ColorSettings.vue'
+import ConnectionSettings from '../components/panels/ConnectionSettings.vue'
+import NotificationSettings from '../components/panels/NotificationSettings.vue'
+import DummyNotification from '../components/panels/DummyNotification.vue'
+import ChatSettings from '../components/panels/ChatSettings.vue'
+
 export default {
-  components: { ColorSettings, ConnectionSettings, NotificationSettings, DummyNotification },
+  components: { ColorSettings, ConnectionSettings, NotificationSettings, DummyNotification, ChatSettings },
   data: () => ({
     themeColor:localStorage.themeColor
   }),

@@ -60,7 +60,7 @@ export default {
             localStorage.emoteSize = config.misc.emote_size
             localStorage.badgeSize = config.misc.badge_size
             localStorage.maxMessages = config.misc.max_messages
-            localStorage.triggerOffset = config.triggerOffset
+            localStorage.triggerOffset = config.misc.trigger_offset
         }
         this.$vuetify.theme.dark = localStorage.darkMode == 'true'
         setInterval(() => {

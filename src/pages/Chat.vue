@@ -209,6 +209,7 @@ export default {
       }
     },
     deleteMessage(messageId) {
+      console.log(localStorage.hideDeletedMessages === 'true')
       if (localStorage.hideDeletedMessages === 'true') {
         Vue.delete(this.messages, messageId);
       } else {
