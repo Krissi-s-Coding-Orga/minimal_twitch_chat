@@ -28,15 +28,12 @@ export default {
         }
     },
     methods: {
-        getTimeout: () => {
-            return Number(localStorage.notificationTimeout)
-        },
         removeNotification: (id) => {
             setTimeout(() => {
                 console.log(`delete ${id}`)
                 Vue.delete(this.notifications,
                     id)
-            }, this.getTimeout() + 500)
+            }, Number(localStorage.notificationTimeout) + 500)
         }
     },
     created() {
