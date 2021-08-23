@@ -15,7 +15,6 @@
 <script>
 import Vue from "vue"
 
-import { config } from "@/main"
 import subs from "@/assets/meta_data/subs.json"
 
 import Notification from "./Notification.vue"
@@ -31,6 +30,12 @@ export default {
     methods: {
         getTimeout: () => {
             return localStorage.notificationTimeout
+        },
+        removeNotification: (id) => {
+            setTimeout(() => {
+                Vue.delete(this.notifications,
+                    id)
+            }, this.getTimeout() + 500)
         }
     },
     created() {
@@ -59,10 +64,7 @@ export default {
                     userstate: userstate,
                     title: title
                 })
-            setTimeout(() => {
-                Vue.delete(this.notifications,
-                    `sub:${userstate.id}`)
-            }, config.notifications.timeout + 500)
+                this.removeNotification(`sub:${userstate.id}`)
         })
         
         this.$client.on("resub", (channel, username, months, message, userstate, method) => {
@@ -96,10 +98,7 @@ export default {
                     userstate: userstate,
                     title: title
                 })
-            setTimeout(() => {
-                Vue.delete(this.notifications,
-                    `resub:${userstate.id}`)
-            }, config.notifications.timeout + 500)
+                this.removeNotification(`resub:${userstate.id}`)
         })
 
         this.$client.on("subgift", (channel, username, months, recipient, methods, userstate) => {
@@ -133,10 +132,7 @@ export default {
                     userstate: userstate,
                     title: title
                 })
-            setTimeout(() => {
-                Vue.delete(this.notifications,
-                    `giftsub:${userstate.id}`)
-            }, config.notifications.timeout + 500)
+                this.removeNotification(`giftsub:${userstate.id}`)
         })
 
         this.$client.on("giftpaidupgrade", (channel, username, sender, userstate) => {
@@ -173,10 +169,7 @@ export default {
                     userstate: userstate,
                     title: title
                 })
-            setTimeout(() => {
-                Vue.delete(this.notifications,
-                    `giftsub:${userstate.id}`)
-            }, config.notifications.timeout + 500)
+            this.removeNotification(`giftsub:${userstate.id}`)
         })
 
         this.$client.on("submysterygift", (channel, username, numbOfSubs, methods, userstate) => {
@@ -205,10 +198,7 @@ export default {
                     userstate: userstate,
                     title: title
                 })
-            setTimeout(() => {
-                Vue.delete(this.notifications,
-                    `mysterygiftsub:${userstate.id}`)
-            }, config.notifications.timeout + 500)
+            this.removeNotification(`mysterygiftsub:${userstate.id}`)
         })
 
         this.$client.on("cheer", (channel, userstate, message) => {
@@ -221,10 +211,7 @@ export default {
                     userstate: userstate,
                     title: `${userstate.bits} Bits from ${userstate['display-name']}`
                 })
-            setTimeout(() => {
-                Vue.delete(this.notifications,
-                    `cheer:${userstate.id}`)
-            }, config.notifications.timeout + 500)
+                this.removeNotification(`cheer:${userstate.id}`)
         })
     }
 }
