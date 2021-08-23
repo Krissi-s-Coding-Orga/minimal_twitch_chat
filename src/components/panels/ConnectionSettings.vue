@@ -10,14 +10,15 @@
                 </v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-                <v-container px-0 py-0>
+                <v-container px-0 py-2>
                     <v-row>
                         <v-col class="py-2">
                             <v-text-field
                                 :color="themeColor"
                                 v-model="switchChannel"
                                 hide-details
-                                label="Twitch Channel"></v-text-field>
+                                label="Twitch Channel"
+                                outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
