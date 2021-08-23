@@ -40,13 +40,9 @@ export default {
             let title = `${userstate['display-name']} just subscribed`
             let eventMessage = message
 
-            if(eventMessage === ''){
+            if(eventMessage === null){
                 eventMessage = `${userstate['display-name']} subscribed for ${userstate['msg-param-sub-plan-name']}`
             }
-
-            console.log('subscription')
-            console.log(userstate)
-            console.log(method)
 
             if(method.prime) {
                 title = subs.fresh.prime
@@ -74,14 +70,9 @@ export default {
             let cumulativeMonths = ~~userstate["msg-param-cumulative-months"]
             let eventMessage = message
 
-            if(eventMessage === ''){
-                eventMessage = `${userstate['display-name']} subscribed for the ${months} Month of ${userstate['msg-param-sub-plan-name']}`
+            if(eventMessage === null){
+                eventMessage = `${userstate['display-name']} subscribed for the ${cumulativeMonths} Month of ${userstate['msg-param-sub-plan-name']}`
             }
-
-            console.log('resub')
-            console.log(userstate)
-            console.log(method)
-            console.log(months)
 
             if(method.prime) {
                 title = subs.resub.prime
@@ -123,13 +114,17 @@ export default {
                     userstate['display-name']
                 )
                 .replace(
-                    /(\${gifted})/g,
+                    /(\${giftedname})/g,
                     recipient
                 )
 
             message = message.replace(
                     /(\${count})/g,
                     senderCount
+                )
+                .replace(
+                    /(\${username})/g,
+                    userstate['display-name']
                 )
 
             Vue.set(this.notifications, 
@@ -156,7 +151,7 @@ export default {
                     sender
                 )
                 .replace(
-                    /(\${gifted})/g,
+                    /(\${giftedname})/g,
                     username
                 )
 
@@ -167,6 +162,14 @@ export default {
                 .replace(
                     /(\${month})/g,
                     giftedCount
+                )
+                .replace(
+                    /(\${giftedname})/g,
+                    username
+                )
+                .replace(
+                    /(\${username})/g,
+                    userstate['display-name']
                 )
 
             Vue.set(this.notifications, 
