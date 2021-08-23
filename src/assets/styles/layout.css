@@ -97,6 +97,17 @@ html {
   white-space: nowrap;
 }
 
+.input_with_icon {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+
+.settings_icon_example {
+  margin-left: 10px;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(100vw);

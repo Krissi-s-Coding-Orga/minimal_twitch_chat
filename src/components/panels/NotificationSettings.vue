@@ -41,7 +41,8 @@
                                 suffix="px"
                                 type="number"
                                 label="Header Font Size"
-                                outlined></v-text-field>
+                                outlined
+                                :style="{ fontSize: headerFontSize }"></v-text-field>
                         </v-col>
                         <v-col class="py-2">
                             <v-text-field
@@ -51,11 +52,12 @@
                                 suffix="px"
                                 type="number"
                                 label="Font Size"
-                                outlined></v-text-field>
+                                outlined 
+                                :style="{ fontSize: fontSize }"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col class="py-2">
+                        <v-col class="py-2 input_with_icon">
                             <v-text-field
                                 :color="themeColor"
                                 v-model="changeEmoteSize"
@@ -64,8 +66,9 @@
                                 type="number"
                                 label="Emote Size"
                                 outlined></v-text-field>
+                            <img src="https://static-cdn.jtvnw.net/emoticons/v2/425618/default/dark/2.0" :style="{ height: emoteSize }" class="settings_icon_example">
                         </v-col>
-                        <v-col class="py-2">
+                        <v-col class="py-2 input_with_icon">
                             <v-text-field
                                 :color="themeColor"
                                 v-model="changeBadgeSize"
@@ -74,6 +77,7 @@
                                 type="number"
                                 label="Badge Size"
                                 outlined></v-text-field>
+                            <img src="https://static-cdn.jtvnw.net/badges/v1/b817aba4-fad8-49e2-b88a-7cc744dfa6ec/2" :style="{ height: badgeSize }" class="settings_icon_example">
                         </v-col>
                     </v-row>
                 </v-container>
@@ -86,7 +90,11 @@ import { bus } from "@/main"
     
 export default {
     data: () => ({
-        themeColor: localStorage.themeColor
+        themeColor: localStorage.themeColor,
+        emoteSize: localStorage.notificationEmoteSize,
+        badgeSize: localStorage.notificationBadgeSize,
+        fontSize: localStorage.notificationFontSize,
+        headerFontSize: localStorage.notificationHeaderFontSize,
     }),
     methods: {
         updateSettings: () => {
@@ -123,6 +131,7 @@ export default {
             },
             set(fontSize) {
                 localStorage.notificationHeaderFontSize = fontSize + 'px'
+                this.headerFontSize = fontSize + 'px'
                 this.updateSettings()
                 return this.parseNumberWithPx(localStorage.notificationHeaderFontSize)
             }
@@ -133,6 +142,7 @@ export default {
             },
             set(fontSize) {
                 localStorage.notificationFontSize = fontSize + 'px'
+                this.fontSize = fontSize + 'px'
                 this.updateSettings()
                 return this.parseNumberWithPx(localStorage.notificationFontSize)
             }
@@ -143,6 +153,7 @@ export default {
             },
             set(badgeSize) {
                 localStorage.notificationBadgeSize = badgeSize + 'px'
+                this.badgeSize = badgeSize + 'px'
                 this.updateSettings()
                 return this.parseNumberWithPx(localStorage.notificationBadgeSize)
             }
@@ -153,6 +164,7 @@ export default {
             },
             set(emoteSize) {
                 localStorage.notificationEmoteSize = emoteSize + 'px'
+                this.emoteSize = emoteSize + 'px'
                 this.updateSettings()
                 return this.parseNumberWithPx(localStorage.notificationEmoteSize)
             }
