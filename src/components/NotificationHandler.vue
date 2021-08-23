@@ -38,6 +38,11 @@ export default {
     created() {
         this.$client.on("subscription", (channel, username, method, message, userstate) => {
             let title = `${userstate['display-name']} just subscribed`
+            let eventMessage = message
+
+            if(eventMessage === ''){
+                eventMessage = `${userstate['display-name']} subscribed for ${userstate['msg-param-sub-plan-name']}`
+            }
 
             console.log('subscription')
             console.log(userstate)
@@ -57,7 +62,7 @@ export default {
             Vue.set(this.notifications, 
                 `sub:${userstate.id}`,
                 {
-                    content: message,
+                    content: eventMessage,
                     userstate: userstate,
                     title: title
                 })
@@ -67,6 +72,11 @@ export default {
         this.$client.on("resub", (channel, username, months, message, userstate, method) => {
             let title = `${userstate['display-name']} just resubed`
             let cumulativeMonths = ~~userstate["msg-param-cumulative-months"]
+            let eventMessage = message
+
+            if(eventMessage === ''){
+                eventMessage = `${userstate['display-name']} subscribed for the ${months} Month of ${userstate['msg-param-sub-plan-name']}`
+            }
 
             console.log('resub')
             console.log(userstate)
@@ -91,7 +101,7 @@ export default {
             Vue.set(this.notifications, 
                 `resub:${userstate.id}`,
                 {
-                    content: message,
+                    content: eventMessage,
                     userstate: userstate,
                     title: title
                 })
