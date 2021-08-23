@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         getTimeout: () => {
-            return localStorage.notificationTimeout
+            return Number(localStorage.notificationTimeout)
         },
         removeNotification: (id) => {
             setTimeout(() => {
