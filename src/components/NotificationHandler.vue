@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         getTimeout: () => {
-            return config.notifications.timeout
+            return localStorage.notificationTimeout
         }
     },
     created() {
