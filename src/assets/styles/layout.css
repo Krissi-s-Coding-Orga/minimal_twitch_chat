@@ -92,16 +92,16 @@ html {
   align-items: center;
 }
 .v-toolbar__title .title_marquee {
-  animation: marquee 10s linear infinite;
+  animation: marquee 20s linear infinite;
   position: absolute;
   white-space: nowrap;
 }
 
 @keyframes marquee {
   0% {
-    transform: translateX(100vw);
+    transform: translateX(130vw);
   }
   100% {
-    transform: translateX(-100vw);
+    transform: translateX(-130vw);
   }
 }
