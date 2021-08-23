@@ -99,9 +99,9 @@ html {
 
 @keyframes marquee {
   0% {
-    transform: translateX(200vw);
+    transform: translateX(100vw);
   }
   100% {
-    transform: translateX(-200vw);
+    transform: translateX(-150vw);
   }
 }

@@ -28,9 +28,8 @@ export default {
         }
     },
     methods: {
-        removeNotification: (id) => {
+        removeNotification: function (id) {
             setTimeout(() => {
-                console.log(`delete ${id}`)
                 Vue.delete(this.notifications,
                     id)
             }, Number(localStorage.notificationTimeout) + 500)
