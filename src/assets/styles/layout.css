@@ -92,7 +92,7 @@ html {
   align-items: center;
 }
 .v-toolbar__title .title_marquee {
-  animation: marquee 20s linear infinite;
+  animation: marquee 15s linear infinite;
   position: absolute;
   white-space: nowrap;
 }
