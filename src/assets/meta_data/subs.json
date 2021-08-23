@@ -6,10 +6,10 @@
         "3000": "${username} subscribed on Tier 3"
     },
     "resub": {
-        "prime": "${username} subscribed already for ${month} Month with Prime",
-        "1000": "${username} subscribed already for ${month} Month at Tier 1",
-        "2000": "${username} subscribed already for ${month} Month at Tier 2",
-        "3000": "${username} subscribed already for ${month} Month at Tier 3"
+        "prime": "${username} subscribed for the ${month} Month with Prime",
+        "1000": "${username} subscribed for the ${month} Month at Tier 1",
+        "2000": "${username} subscribed for the ${month} Month at Tier 2",
+        "3000": "${username} subscribed for the ${month} Month at Tier 3"
     },
     "gifted": {
         "1000":  "${username} gifted a Tier 1 sub for ${giftedname}",
