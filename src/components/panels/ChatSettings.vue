@@ -68,6 +68,11 @@
                         </v-col>
                     </v-row>
                     <v-row>
+                        <v-col class="py-2">
+                            <v-switch v-model="toggleSwitchingBackground" label="Switch Message Background" hide-details class="mt-0" :color="themeColor"></v-switch>
+                        </v-col>
+                    </v-row>
+                    <v-row>
                         <v-col class="py-2 mt-2">
                             <v-text-field
                                 :color="themeColor"
@@ -121,6 +126,16 @@ export default {
                 localStorage.setItem('hideDeletedMessages', enable)
                 this.updateSettings()
                 return localStorage.hideDeletedMessages === 'true'
+            }
+        },
+        toggleSwitchingBackground: {
+            get() {
+                return localStorage.switchBackground === 'true';
+            },
+            set(enable) {
+                localStorage.setItem('switchBackground', enable)
+                this.updateSettings()
+                return localStorage.switchBackground === 'true'
             }
         },
         changeMaxMessages: {
