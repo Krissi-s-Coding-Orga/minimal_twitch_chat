@@ -22,13 +22,13 @@
                             :style="{ height: badgeSize, width: badgeSize }"
                             src="https://static-cdn.jtvnw.net/badges/v1/bbbe0db0-a598-423e-86d0-f9fb98ca1933/2"/>
                         <span class="username" style="color: #eb34a8">
-                            Moddy
+                            Moddy:
                         </span> 
                         This Chat is great!
                     </div>
                     <div :class="defaultMessageClasses">
                         <span class="username" style="color: #3a34eb">
-                            Nerd
+                            Nerd:
                         </span> 
                         Yeah its awesome and powered by
                         <a class="message-url" 
@@ -40,19 +40,19 @@
                     </div>
                     <div :class="defaultMessageClasses">
                         <span class="username" style="color: #37eb34">
-                            Proton
+                            Proton:
                         </span> 
                         Please write more :)
                     </div>
                     <div :class="defaultMessageClasses + ' message-action'">
                         <span class="username" style="color: #eb34a8">
-                            Devlon
+                            Devlon:
                         </span> 
                         I am Important /me
                     </div>
                     <div :class="defaultMessageClasses + ' message-highlighted'" :style="{ background: themeColor }">
                         <span class="username" style="color: #ebd234">
-                            User
+                            User:
                         </span> 
                         no you aren`t 
                         <img :style="{ height: emoteSize }" src="https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0">
@@ -63,7 +63,7 @@
                             :style="{ height: badgeSize, width: badgeSize }"
                             src="https://static-cdn.jtvnw.net/badges/v1/1d4b03b9-51ea-42c9-8f29-698e3c85be3d/2"/>
                         <span class="username" style="color: #820000">
-                            Spammer
+                            Spammer:
                         </span> 
                         <span class="deleted" v-show="hideDeletedMessages === 'false'">
                             Message got deleted
