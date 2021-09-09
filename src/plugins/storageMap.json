@@ -1,0 +1,20 @@
+{
+  "darkMode": "colors.dark_mode",
+  "themeColor" : "colors.color",
+  "switchBackground": "colors.change_background",
+
+  "notificationTimeout": "notifications.timeout",
+  "notificationFontSize": "notifications.font_size",
+  "notificationBadgeSize": "notifications.badge_size",
+  "notificationEmoteSize": "notifications.emote_size",
+  "notificationHeaderFontSize": "notifications.header_font_size",
+  "notificationMinBits": "notifications.min_bits",
+
+  "hideDeletedMessages": "misc.hide_deleted_message",
+  "invertChat": "misc.invert_chat",
+  "fontSize": "misc.font_size",
+  "emoteSize": "misc.emote_size",
+  "badgeSize": "misc.badge_size",
+  "maxMessages": "misc.max_messages",
+  "triggerOffset": "misc.trigger_offset"
+}

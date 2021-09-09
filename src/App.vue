@@ -21,7 +21,8 @@
 
 import Chat from "./pages/Chat.vue"
 import NotificationHandler from "./components/NotificationHandler.vue"
-import { config, bus } from "./main"
+import { bus } from "./main"
+import defaultStorage from "./plugins/defaultStorage"
 import ConnectingDialog from './components/ConnectingDialog.vue'
 import ReconnectDialog from './components/ReconnectDialog.vue'
 import Settings from './pages/Settings.vue'
@@ -40,28 +41,7 @@ export default {
         };
     },
     created() {
-        if(typeof(localStorage.channel) === 'undefined') {
-            localStorage.channel = config.channel
-
-            localStorage.darkMode = config.colors.dark_mode
-            localStorage.themeColor = config.colors.color
-            localStorage.switchBackground = config.colors.change_background
-
-            localStorage.notificationTimeout = config.notifications.timeout
-            localStorage.notificationFontSize = config.notifications.font_size
-            localStorage.notificationBadgeSize = config.notifications.badge_size
-            localStorage.notificationEmoteSize = config.notifications.emote_size
-            localStorage.notificationHeaderFontSize = config.notifications.header_font_size
-            localStorage.notificationMinBits = config.notifications.min_bits
-
-            localStorage.hideDeletedMessages = config.misc.hide_deleted_message
-            localStorage.invertChat = config.misc.invert_chat
-            localStorage.fontSize = config.misc.font_size
-            localStorage.emoteSize = config.misc.emote_size
-            localStorage.badgeSize = config.misc.badge_size
-            localStorage.maxMessages = config.misc.max_messages
-            localStorage.triggerOffset = config.misc.trigger_offset
-        }
+        defaultStorage.loadDefaults()
         this.$vuetify.theme.dark = localStorage.darkMode == 'true'
         setInterval(() => {
             this.$vuetify.theme.dark = localStorage.darkMode == 'true'
