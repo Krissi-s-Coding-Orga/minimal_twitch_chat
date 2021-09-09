@@ -11,6 +11,7 @@
   "notificationEmoteSize": "notifications.emote_size",
   "notificationHeaderFontSize": "notifications.header_font_size",
   "notificationMinBits": "notifications.min_bits",
+  "followerNotification": "notifications.follow_notification",
 
   "hideDeletedMessages": "misc.hide_deleted_message",
   "invertChat": "misc.invert_chat",

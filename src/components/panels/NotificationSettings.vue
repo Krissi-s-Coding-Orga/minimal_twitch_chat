@@ -12,7 +12,12 @@
             <v-card-text>
                 <v-container px-0 py-2>
                     <v-row>
-                        <v-col class="py-2">
+                      <v-col class="py-2">
+                        <v-switch v-model="changeFollowerNotification" label="Follower Notification" hide-details class="mt-0" :color="themeColor"></v-switch>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col class="py-2 mt-2">
                             <v-text-field
                                 :color="themeColor"
                                 v-model="changeTimeout"
@@ -22,7 +27,7 @@
                                 label="Notification timeout"
                                 outlined></v-text-field>
                         </v-col>
-                        <v-col class="py-2">
+                        <v-col class="py-2 mt-2">
                             <v-text-field
                                 :color="themeColor"
                                 v-model="changeMinBits"
@@ -168,7 +173,20 @@ export default {
                 this.updateSettings()
                 return this.parseNumberWithPx(localStorage.notificationEmoteSize)
             }
-        }
+        },
+        changeFollowerNotification: {
+          get() {
+            return localStorage.followerNotification === 'true';
+          },
+          set(enable) {
+            if(enable)
+              localStorage.setItem('followerNotification', true)
+            else
+              localStorage.setItem('followerNotification', false)
+            this.updateSettings()
+            return localStorage.followerNotification === 'true'
+          }
+        },
     },
     created() {
         bus.$on('updateSettings', () => {
