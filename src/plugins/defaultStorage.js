@@ -14,9 +14,6 @@ function loadDefaults() {
         const splitPath = path.split('.')
         const section = config[splitPath[0]][splitPath[1]]
 
-        console.log(path)
-        console.log(section)
-
         localStorage.setItem(key, section)
     }
 }
