@@ -18,11 +18,6 @@
                     </v-row>
                     <v-row>
                         <v-col class="py-2">
-                            <v-switch v-model="toggleSwitchingBackground" label="Switch Background" hide-details class="mt-0" :color="themeColor"></v-switch>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col class="py-2">
                             <span>Theme Color:</span>
                             <v-color-picker
                                 dot-size="25"
@@ -63,19 +58,6 @@
                         localStorage.setItem('darkMode', false)
                     this.updateSettings()
                     return localStorage.darkMode === 'true'
-                }
-            },
-            toggleSwitchingBackground: {
-                get() {
-                    return localStorage.switchBackground === 'true';
-                },
-                set(enable) {
-                    if(enable)
-                        localStorage.setItem('switchBackground', true)
-                    else
-                        localStorage.setItem('switchBackground', false)
-                    this.updateSettings()
-                    return localStorage.switchBackground === 'true'
                 }
             },
             switchThemeColor: {
