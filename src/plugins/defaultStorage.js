@@ -7,13 +7,12 @@ export default { loadDefaults }
 function loadDefaults() {
     console.log('load defaults')
     for(const key in map) {
-        if(localStorage.getItem(key) !== null) {
-            return
-        }
-        const path = map[key]
-        const splitPath = path.split('.')
-        const section = config[splitPath[0]][splitPath[1]]
+        if(localStorage.getItem(key) === null) {
+            const path = map[key]
+            const splitPath = path.split('.')
+            const section = config[splitPath[0]][splitPath[1]]
 
-        localStorage.setItem(key, section)
+            localStorage.setItem(key, section)
+        }
     }
 }
