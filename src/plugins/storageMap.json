@@ -1,4 +1,6 @@
 {
+  "channel": "misc.channel",
+
   "darkMode": "colors.dark_mode",
   "themeColor" : "colors.color",
   "switchBackground": "colors.change_background",
