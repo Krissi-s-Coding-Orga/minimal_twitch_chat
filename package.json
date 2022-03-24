@@ -15,7 +15,7 @@
         "vue-context": "^6.0.0",
         "vue-headful": "^2.1.0",
         "vue-resource": "^1.5.3",
-        "vue-router": "^3.5.2",
+        "vue-router": "^3.5.3",
         "vue-toast-notification": "^0.6.2",
         "vuetify": "^2.5.8",
         "vuex": "^3.6.2"
